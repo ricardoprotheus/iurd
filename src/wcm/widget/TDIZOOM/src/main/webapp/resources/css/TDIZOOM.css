@@ -1,0 +1,7 @@
+.fluig-style-guide .form-control[readonly]{
+	color: #555 !important;
+}
+
+.fluig-style-guide .form-control[disabled]{
+	color: #555 !important;
+}

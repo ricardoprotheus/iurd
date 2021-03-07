@@ -1,0 +1,826 @@
+<html>
+<head>
+	<link type="text/css" rel="stylesheet" href="/style-guide/css/fluig-style-guide.min.css"/>
+	<link type="text/css" rel="stylesheet" href="style.css" />
+	<script type="text/javascript" src="/portal/resources/js/jquery/jquery.js"></script>
+	<script type="text/javascript" src="/portal/resources/js/jquery/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="/portal/resources/js/mustache/mustache-min.js"></script>
+	<script type="text/javascript" src="/style-guide/js/fluig-style-guide.min.js" charset="utf-8"></script>
+	<script type="text/javascript" src="freedom_lib.js" charset="utf-8"></script>
+	<script type="text/javascript" src="jquery.maskMoney.min.js" charset="utf-8"></script>
+	<script type="text/javascript" src="jquery.mask.min.js" charset="utf-8"></script>
+	<script type="text/javascript" src="funcoes.js"></script>
+	<script src="/webdesk/vcXMLRPC.js"></script>
+	<script type="text/javascript" src="/TDIZOOM/resources/js/gd-lib.js"></script>
+	<script type="text/javascript" src="/TDIZOOM/resources/js/jMask.js"></script>
+	<link type="text/css" rel="stylesheet" href="/TDIZOOM/resources/css/TDIZOOM.css">
+</head>
+<body onload="loadform();">
+	<div class="fluig-style-guide">
+		<form name="form" role="form">
+			<input type="hidden" id="name_report" name="name_report" value="COMMUNICATION"/>
+			<input type="hidden" id="hd_numProcesso" name="hd_numProcesso"/>
+			<input type="hidden" id="nextResponsible" name="nextResponsible" value=""/>
+			<input type="hidden" id="emailSecretary" name="emailSecretary" value=""/>
+						
+			<div class="tab-content">
+				<div id="home" class="tab-pane fade in active">
+					<div class="panel-group" id="accordion">
+						
+						<!-- SECRETARY -->
+						<div class="panel panel-default" id="divInfoGeral">
+							<div class="panel-heading fs-cursor-pointer">
+								<h3 class="panel-title">
+									<b class="tituloB up" data-toggle="collapse" data-target="#collapse11" data-parent="#divInfoGeral" style="font-size: 13pt">Communication Request</b>
+								</h3>
+							</div>
+							<div id="collapse11" class="collapse">
+								<div class="panel-body fundoCinza">
+									<div id="divInfomacaoGeral">
+										<label class="control-label tituloDiv">Request Data</label>
+										<div class="bordaDiv">
+											<div>
+												<input type="hidden" id="aux1" name="aux1" value="">
+												<input type="hidden" id="aux2" name="aux2" value="">
+												<input type="hidden" id="aux3" name="aux3" value="">
+												<input type="hidden" id="auxRadioChurch" name="auxRadioChurch" value="">
+											</div>
+											<div class="form-group row">
+												<div class="col-md-4">
+													<label class="control-label ">Requester</label>
+													<input type="text" readonly id="txt_solicitante" name="txt_solicitante" class="form-control">
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Date Requested</label>
+													<input type="text" readonly id="txt_data_sol" name="txt_data_sol" class="form-control">
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Hour</label>
+													<input type="text" readonly name="txt_hourFirst" id="txt_hourFirst" class="form-control">
+												</div>
+												<p><p>
+												<div class="form-group row">
+													<div class="col-md-3">
+														<label>State</label>
+														<input type="hidden" name="code_state" id="code_state" class="form-control" readonly>
+														<input type="zoom" id='zoom_state' name='zoom_state' data-zoom="{
+															'displayKey':'code',
+															'datasetId':'states',
+															'maximumSelectionLength':'1',
+															'placeholder':'Choose the state',
+															'fields':[
+																{
+																	'field':'code',
+																	'label':'States'
+																},{
+																	'field':'description',
+																	'label':'Description'
+																}
+														]
+														}" 
+														/>
+													</div>				
+													<div class="col-md-6">
+														<label>State Description</label>
+														<input type="text" name="name_state" id="name_state" class="form-control" readonly>
+													</div>
+												</div>
+											</div>
+											<div class="form-group row" style="display:none;">
+												<input type="text" id="atividade" name="atividade">
+											</div>											
+										</div>
+										<label class="control-label tituloDiv">General Information</label>
+										<div class="bordaDiv">
+											<div class="form-group row">
+												<div class="col-md-6">
+													<label class="control-label">What type of contract is this</label><br>
+													<div class="radio">
+														<div class="col-md-4">
+															<label>
+																<input type="radio" id="rd_aplicacao" name="rd_aplicacao" value="novo">New
+															</label>
+														</div>
+														<div class="col-md-4">
+															<label>
+																<input type="radio" id="rd_aplicacao" name="rd_aplicacao" value="radio">Radio
+															</label>
+														</div>
+														<div class="col-md-4">
+															<label>
+																<input type="radio" id="rd_aplicacao" name="rd_aplicacao" value="jornal">Newspaper
+															</label>
+														</div>
+														<div class="col-md-4">
+															<label>
+																<input type="radio" id="rd_aplicacao" name="rd_aplicacao" value="legenda">Closed Caption
+															</label>
+														</div>
+														<div class="col-md-4">
+															<label>
+																<input type="radio" id="rd_aplicacao" name="rd_aplicacao" value="producaoTV">TV Production
+															</label>
+														</div>	
+														<div class="col-md-4">
+															<label>
+																<input type="radio" id="rd_aplicacao" name="rd_aplicacao" value="outro">Other
+															</label>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-6">
+													<label class="control-label">What does this contract apply to</label><br>
+													<div class="radio">
+														<div class="col-md-3">
+															<label>
+																<input type="radio" id="rd_tipoContrato" name="rd_tipoContrato" value="tv">TV
+															</label>
+														</div>	
+														<div class="col-md-3">	
+															<label>
+																<input type="radio" id="rd_tipoContrato" name="rd_tipoContrato" value="renovacao">Renewal
+															</label>
+														</div>	
+														<div class="col-md-3">	
+															<label>
+																<input type="radio" id="rd_tipoContrato" name="rd_tipoContrato" value="cancelamento">Cancellation
+															</label>
+														</div>	
+													</div>
+												</div>
+											</div>
+										</div>
+										<label class="control-label tituloDiv">Please specify the start and end date of the contract</label>
+										<div class="bordaDiv">
+											<div class="form-group row">
+												<div class="col-md-6">
+													<label class="control-label">Start Date</label>
+													<input type="text" id="txt_dataInicio" name="txt_dataInicio" class="form-control" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+												</div>
+												<div class="col-md-6">
+													<label class="control-label">End Date</label>
+													<input type="text" id="txt_dataFinal" name="txt_dataFinal" class="form-control" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+												</div>
+											</div>
+										</div>
+										<label class="control-label tituloDiv">Details</label>
+										<div class="bordaDiv">
+											<div class="form-group row">
+												<div class="col-md-4">
+													<label class="control-label">Select the term of the new contract provided by vendor</label>					
+													<input type="zoom" id='zoom_term' name='zoom_term' data-zoom="{
+																		'displayKey':'description',
+																		'datasetId':'term',
+																		'maximumSelectionLength':'1',
+																		'placeholder':'Choose the term',
+																		'fields':[
+																			{
+																				'field':'description',
+																				'label':'Description'
+																			}
+																		]
+																	}" 
+													/>	
+													<input type="hidden" class="form-control" name="txt_term_days" id="txt_term_days"/>	
+												</div>
+												<div class="col-md-4">	
+													<label class="control-label">First Installment</label>
+													<input type="text" id="dataInstallment" name="dataInstallment" class="form-control readonly-date" readonly >
+												</div>
+												<div class="col-md-4">
+													<label class="control-label">Who is our person of contact?</label>
+													<input type="text" id="txt_pessoaContato" name="txt_pessoaContato" class="form-control">
+												</div>
+											</div> 
+											<div class="form-group row">
+												<div class="col-md-4">
+													<label class="control-label">How much will we pay per program/spot?</label>
+													<input type="text" placeholder="0.00" id="txt_pagamentoPrograma" name="txt_pagamentoPrograma" class="form-control" onblur="somarTitulo()">
+												</div>
+												<div class="col-md-4">	
+													<label class="control-label" for="rd_status">How many Terms will this contract consist of?</label><br>
+													<input type="text" id="txt_installment" name="txt_installment" placeholder="0" class="form-control" onblur="somarTitulo()">
+												</div>
+												<!-- 
+												<div class="col-md-4">
+													<label class="control-label">Grand Total (As stated in the Contract)</label>
+													<input type="text" placeholder="0.00" id="txt_total" name="txt_total" class="form-control" readonly>
+												</div>
+												 -->
+											</div>
+											<div class="form-group row">
+												<div class="col-md-6">
+													<label class="control-label">Has this grand total been verified if there is a 15% discount due to us not having an agency?</label><br>
+													<div class="col-md-12">
+														<div class="radio">
+															<label>
+																<input type="radio" id="rd_verificaDesconto" name="rd_verificaDesconto" value="sim">Yes
+															</label>
+															<label>
+																<input type="radio" id="rd_verificaDesconto" name="rd_verificaDesconto" value="nao">No
+															</label>
+														</div>
+													</div>	
+												</div>
+												<div class="col-md-6">
+													<label class="control-label">What region(s) will be benefited with this request?</label>
+													<input type="text" id="txt_regioesBeneficiadas" name="txt_regioesBeneficiadas" class="form-control" style="margin-top: 10px;">
+												</div>
+											</div>
+											
+											<div class="form-group row">
+												<div class="col-md-2" >
+													<label class="control-label" for="rd_status">Is there an installation fee?</label><br>
+													<div class="col-md-12">
+														<div class="radio" >
+															<label>
+																<input type="radio" id="rd_fee" name="rd_fee" value="sim" onclick="selectFee();">Yes
+															</label>
+															<label>
+																<input type="radio" id="rd_fee" name="rd_fee" value="nao" onclick="selectFee();">No
+															</label>
+														</div>
+													</div>
+													
+												</div>
+												<div class="col-md-2" >	
+													<label class="control-label" >Value ($)</label><br>
+													<input type="text" id="installfee" name="installfee" placeholder="0.00" class="form-control" onblur="somarTitulo()">
+												</div>
+												<div class="col-md-4">	
+													<label class="control-label" >Date Installment Fee</label><br>
+													<input type="text" id="dataInstallFee" name="dataInstallFee" class="form-control readonly-date" readonly >
+												</div>
+											</div>
+										</div>
+											
+											
+										<label class="control-label tituloDiv">Grand Total Cost of Service</label>
+										<div class="bordaDiv">	
+											
+											<div class="form-group row">
+												<div class="col-md-4">
+													<label class="control-label">Grand Total (As stated in the Contract)</label>
+													<input type="text" placeholder="0.00" id="txt_total" name="txt_total" class="form-control" readonly>
+												</div>
+											</div>
+											
+											<div class="form-group row">
+												<div class="col-md-12">
+													<br>
+													<label class="control-label">Comments: Please state as many details (regarding terms, # of programs/spots, airtimes etc.) as possible about the contract. Especially the Cancellation Policy</label>
+													<textarea class="form-control rounded-0" id="comentarios" name="comentarios" rows="3"></textarea> 
+												</div>
+											</div>
+											
+											<div class="form-group row">
+												<div class="col-md-3">
+													<label class="control-label">Are there any documents that come attatched with this form?</label>
+													<div class="radio">
+														<label>
+															<input type="radio" id="rd_documentos" name="rd_documentos" value="sim">Yes
+														</label>
+														<label>
+															<input type="radio" id="rd_documentos" name="rd_documentos" value="nao">No
+														</label>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<!-- SECRETARY FIM -->
+						
+						<!-- STATE LEADER -->
+						<div class="panel panel-default" id="divAprovacao">
+							<div class="panel-heading fs-cursor-pointer">
+								<h3 class="panel-title">
+									<b class="tituloB up" data-toggle="collapse" data-target="#collapse13" data-parent="#divAprovacao" style="font-size: 13pt">State Leader Approval</b>
+								</h3>
+							</div>
+							<div id="collapse13" class="collapse" aria-expanded="true" style>
+								<div class="panel-body fundoCinza">
+									<div id="divAprova">
+										<label class="control-label tituloDiv">State Leader Approval</label>
+										<div class="bordaDiv">
+											<div class="form-group row">
+												<div class="col-md-4">
+													<label class="control-label">Responsible:</label>
+													<input type="text" id="txt_gestor" name="txt_gestor" class="form-control" readonly>
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Date</label>
+													<input type="text" id="txt_dataAprovacao" name="txt_dataAprovacao" class="form-control" readonly>
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Hour:</label>
+													<input type="text" id="txt_horaAprovacao" name="txt_horaAprovacao" class="form-control" readonly>
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="col-md-12">
+													<label class="control-label">Approval</label><br>
+													<div class="radio">
+														<label>
+															<input type="radio" id="rd_aprovacaoGestor" name="rd_aprovacaoGestor" value="sim" >
+															Approved
+														</label>
+														<label>
+															<input type="radio" id="rd_aprovacaoGestor" name="rd_aprovacaoGestor" value="nao" >
+															Denied
+														</label>
+													</div>
+												</div>
+											</div>
+											
+											<div class="form-group row"> 
+												<div class="col-md-12">
+													<label class="control-label">Feedback</label>
+													<textarea class="form-control rounded-0" id="descricao" name="descricao" rows="3"></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- STATE LEADER FIM -->
+						
+						
+						<!-- NATIONAL LEADER LEADER 
+						<div class="panel panel-default" id="divNationalLeader">
+							<div class="panel-heading fs-cursor-pointer">
+								<h3 class="panel-title">
+									<b class="tituloB" data-toggle="collapse" data-target="#collapseNational" data-parent="divNationalLeader" style="font-size: 13pt">National Leader Approval</b>
+								</h3>
+							</div>
+							<div id="collapseNational" class="collapse" aria-expanded="true" style>
+								<div class="panel-body fundoCinza">
+									<div id="divNational">
+										<label class="control-label tituloDiv">National Leader Approval</label>
+										<div class="bordaDiv">
+											<div class="form-group row">
+												<div class="col-md-4">
+													<label class="control-label">Responsible:</label>
+													<input type="text" id="txt_gestor_national_leader" name="txt_gestor_national_leader" class="form-control" readonly>
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Date</label>
+													<input type="text" id="txt_dataAprovacao_nl" name="txt_dataAprovacao_nl" class="form-control" readonly>
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Hour:</label>
+													<input type="text" id="txt_horaAprov_national_leader" name="txt_horaAprov_national_leader" class="form-control" readonly>
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="col-md-12">
+													<label class="control-label">Approval</label><br>
+													<div class="radio">
+														<label>
+															<input type="radio" id="rd_aprovGestor_national_leader" name="rd_aprovGestor_national_leader" value="sim" >
+															Approved
+														</label>
+														<label>
+															<input type="radio" id="rd_aprovGestor_national_leader" name="rd_aprovGestor_national_leader" value="nao" >
+															Denied
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group row"> 
+												<div class="col-md-12">
+													<label class="control-label">Feedback</label>
+													<textarea class="form-control rounded-0" id="descricao_national_leader" name="descricao_national_leader" rows="3"></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						 NATIONAL LEADER FIM -->
+						
+						
+						<!-- DEPARTMENT HEAD -->
+						<div class="panel panel-default" id="divDptHead">
+							<div class="panel-heading fs-cursor-pointer">
+								<h3 class="panel-title">
+									<b class="tituloB" data-toggle="collapse" data-target="#collapseDptHead" data-parent="divDptHead" style="font-size: 13pt">Department Head</b>
+								</h3>
+							</div>
+							<div id="collapseDptHead" class="collapse" aria-expanded="true" style>
+								<div class="panel-body fundoCinza">
+									<div id="divDpt">
+										<label class="control-label tituloDiv">Department Head Approval</label>
+										<div class="bordaDiv">
+											<div class="form-group row">
+												<div class="col-md-4">
+													<label class="control-label">Responsible:</label>
+													<input type="text" id="txt_gestor_dpt_head" name="txt_gestor_dpt_head" class="form-control" readonly>
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Date</label>
+													<input type="text" id="txt_dtaprov_dpt_head" name="txt_dtaprov_dpt_head" class="form-control" readonly>
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Hour:</label>
+													<input type="text" id="txt_hrAprov_dpt_head" name="txt_hrAprov_dpt_head" class="form-control" readonly>
+												</div>
+											</div>
+																					
+											<div class="form-group row">
+												<div class="col-md-12">
+													<label class="control-label">Approval</label><br>
+													<div class="radio">
+														<label>
+															<input type="radio" id="rd_aprovGestor_dpt_head" name="rd_aprovGestor_dpt_head" value="sim" >
+															Approved
+														</label>
+														<label>
+															<input type="radio" id="rd_aprovGestor_dpt_head" name="rd_aprovGestor_dpt_head" value="nao" >
+															Denied
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group row"> 
+												<div class="col-md-12">
+													<label class="control-label">Feedback</label>
+													<textarea class="form-control rounded-0" id="descricao_dpt_head" name="descricao_dpt_head" rows="3"></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+								
+								 <!--<div id="divDepartment" style="display: none;"> --> 
+								<div class="panel-body fundoCinza">
+									<div id="divDepartment"> 
+										<label class="control-label tituloDiv">Department Head</label>
+										<div class="bordaDiv">
+											<!-- MOVIDO POR SERGIO BRUNO - 20201030 -->
+											<!-- ALTERADO BRUNO - 20200520 -->
+											<div class="form-group row">
+												<div class="col-md-12">
+													<label class="control-label">Does this expense apply to more than one church?</label>
+													<div class="radio">
+														<label>
+															  <input type="radio" name="rateioChurch" id="rateioChurch" onclick="selectChurch();" value="yes"> Yes
+															<!--<input type="radio" name="rateioChurch" id="rateioChurch" value="yes"> Yes -->
+														</label>
+														<label>
+															<input type="radio" name="rateioChurch" id="rateioChurch" onclick="selectChurch();" value="no" checked="checked"> No
+															<!--<input type="radio" name="rateioChurch" id="rateioChurch" value="no" checked="checked" > No -->
+														</label>
+													</div>
+												</div>
+											</div>	
+											
+											<!-- ALTERADO BRUNO - 20200520 - FIM -->
+										
+											<div class="form-group row" id="div_church">
+												<div id="registrado">
+													<div class="col-md-3">
+													<label class="control-label">Church</label>
+													<input type="zoom" class="form-control"
+														id="zoom_igreja" name="zoom_igreja"
+														data-zoom="{
+																	'displayKey':'church',
+																	'datasetId':'churches_get',
+																	'maximumSelectionLength':'1',
+																	'fields':[
+																		{
+																		'field':'church',
+																		'label':'Church'
+																		},{
+																			'field':'States',
+																			'label':'State'
+																		},{
+																			'field':'address',
+																			'visible':'false'
+																		}
+					                                               ]
+					                                            }" />
+													</div>
+													<div class="col-md-1">
+														<label class="control-label">State</label>
+														<input type="text" id="txt_estado" name="txt_estado" class="form-control" readonly>
+													</div>
+													<div class="col-md-8">
+														<label class="control-label">Address</label>
+														<input type="text" id="txt_endereco" name="txt_endereco" class="form-control" readonly>
+													</div>
+												</div>
+											</div>
+											
+											<!-- ALTERADO BRUNO - 20200520 --> 
+											<div id="div_table_church" >
+												<label class="control-label ">Churches</label>
+												<div class="bordaDiv">
+													<div class="form-group row">
+														<div class="col-md-1">
+															<input type="hidden" class="form-control" name="linha_church" id="linha_church"/>
+															<input class="btn btn-primary" type="button" value="ADD" onclick="addChurch('table_church');" id="add_church">
+														</div>
+													</div>
+													<div class="form-group row">
+														<div style="overflow-x: scroll; width: 100%"  class="col-md-12">
+															<table class="table table-striped table-bordered" tablename="table_church" noaddbutton="true" nodeletebutton="true" >
+																<thead>
+																	<tr class="active">
+																		<th style="width: 1%;"></th>
+																		<th style="text-align: center; width: 20%">Requesting Church</th>															
+																		<th style="text-align: center; width: 19%">State</th>
+																		<th style="text-align: center; width: 40%">Address</th>
+																		<th style="text-align: center; width: 20%">Percentage</th>
+																	</tr>
+																</thead>
+																<tbody>
+																	<tr>
+																		<td>
+																			<span class="fluigicon fluigicon-trash fluigicon-md" id="spnRemoveChild" name="spnRemoveChild" onClick="fnCustomDelete(this);" style="cursor: pointer;"></span>
+																		</td>
+																		<td style="text-align: center; min-width: 350px; max-width: 350px">
+																			<input type="zoom" id="requesting_church_grid" name="requesting_church_grid" data-zoom="{
+																				'displayKey':'church',
+																				'datasetId':'churches_get',
+																				'maximumSelectionLength':'1',
+																				'placeholder':'Choose the church',
+																				'fields':[
+																					{
+																						'field':'church',
+																						'label':'Church'
+																					},{
+																						'field':'address',
+																						'label':'Address'
+																					},{
+																						'field':'States',
+																						'visible':'false'
+																					}
+																				]
+																			}" />
+																			<input type="hidden" id="hd_requesting_church_grid" name="hd_requesting_church_grid" class="form-control">
+																		</td>
+																		
+																		<td>
+																			<input type="text" id="txt_state_grid" name="txt_state_grid" class="form-control" readonly >
+																		</td>
+																		<td>
+																			<input type="text" id="txt_address_grid" name="txt_address_grid" class="form-control" readonly >
+																		</td>
+																		<td>
+																			<input type="text" id="txt_percent_grid" name="txt_percent_grid" class="form-control" placeholder="0.00" onblur="sumPercent(this)" maxlength="6">
+																		</td>
+																	</tr>
+																</tbody>
+															</table>
+														</div>
+													</div>
+												</div>
+											</div>
+										
+											<!-- ALTERADO BRUNO - 20200520 - FIM -->
+											<!-- MOVIDO POR SERGIO BRUNO - 20201030 - FIM-->
+
+
+										
+											<div class="form-group row">
+												<div class="col-md-4">	
+													<label class="control-label">Invoice Number</label>
+													<!-- maximo de caracteres 13 - adicionado 20200603 - mesmo tamanho da SX3 do protheus para numero do doc. -->
+													<input type="text" id="invoiceNumber" name="invoiceNumber" class="form-control" maxlength="13" > 
+												</div>
+												
+												<div class="col-md-4">
+													<label class="control-label">Supplier</label>
+													<!--  
+													<input type="zoom" id='zoom_supplier' name='zoom_supplier' data-zoom="{
+														'displayKey':'code',
+														'datasetId':'supplier',
+														'maximumSelectionLength':'1',
+														'placeholder':'Choose the supplier',
+														'fields':[
+															{
+																'field':'code',
+																'label':'Code'
+															},{
+																'field':'unit',
+																'label':'Unit'
+															},{
+																'field':'name',
+																'label':'Name'
+															}
+														]
+													}" 
+													/>
+													-->
+													<input type="zoom" id="zoom_supplier" name="zoom_supplier" data-zoom="{
+														'displayKey':'name',
+														'datasetId':'supplier',
+														'maximumSelectionLength':'1',
+														'placeholder':'Choose the supplier',
+														'fields':[
+															{
+																'field':'code',
+																'label':'Code'
+															},{
+																'field':'unit',
+																'label':'Unit'
+															},
+															{
+																'field':'name',
+																'label':'Name'
+															}
+														]
+													}" 
+													/>
+													<input type="hidden" id="txt_supplier" name="txt_supplier" class="form-control" >
+													<input type="hidden" id="txt_unit" name="txt_unit" class="form-control" >
+													<input type="hidden" id="txt_description" name="txt_description" class="form-control" >	
+												</div>
+												<!--
+												<div class="col-md-1">
+													<label class="control-label">Unit</label>
+													<input type="text" id="txt_unit" name="txt_unit" class="form-control" readonly>
+												</div>
+												<div class="col-md-8">
+													<label class="control-label">Description</label>
+													<input type="text" id="txt_description" name="txt_description" class="form-control" readonly>
+												</div>
+												-->
+											</div>
+										
+											<div class="form-group row">
+												<div class="col-md-4">
+													<label class="control-label">GL Code</label>
+													<input type="hidden" name="gl_code" id="gl_code" class="form-control" >
+													<input type="zoom" id='classes' name='classes' data-zoom="{
+														'displayKey':'descri',
+														'datasetId':'classes',
+														'maximumSelectionLength':'1',
+														'placeholder':'Choose the class',
+														'fields':[
+															{
+																'field':'code',
+																'label':'Code'
+															},{
+																'field':'descri',
+																'label':'Description'
+															}
+														]
+														}" 
+													/>	
+												</div>
+												
+												<div class="col-md-4">
+													<label class="control-label">Department</label>
+													<input type="zoom" class="form-control"
+																id="zoom_department" name="zoom_department"
+																data-zoom="{
+																			'displayKey':'descri',
+																			'datasetId':'department',
+																			'maximumSelectionLength':'1',
+																			'fields':[
+																				{
+																				'field':'code',
+																				'label':'Code'
+																				},{
+																					'field':'descri',
+																					'label':'Description'
+																				}
+																		   ]
+																		}" 
+													/>
+													<input type="hidden" id="txt_department_code" name="txt_department_code" class="form-control">
+													<input type="hidden" id="txt_department_description" name="txt_department_description" class="form-control">
+												</div>												
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- DEPARTMENT HEAD FIM -->
+						
+						<!-- DIVISION HEAD -->
+						<div class="panel panel-default" id="divDivision">
+							<div class="panel-heading fs-cursor-pointer">
+								<h3 class="panel-title">
+									<b class="tituloB" data-toggle="collapse" data-target="#collapseDivision" data-parent="divDivision" style="font-size: 13pt">Division Approval</b>
+								</h3>
+							</div>
+							<div id="collapseDivision" class="collapse" aria-expanded="true" style>
+								<div class="panel-body fundoCinza">
+									<div id="divDivis">
+										<label class="control-label tituloDiv">Division Approval</label>
+										<div class="bordaDiv">
+											<div class="form-group row">
+												<div class="col-md-4">
+													<label class="control-label">Responsible:</label>
+													<input type="text" id="txt_gestor_division" name="txt_gestor_division" class="form-control" readonly>
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Date</label>
+													<input type="text" id="txt_dtaprov_division" name="txt_dtaprov_division" class="form-control" readonly>
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Hour:</label>
+													<input type="text" id="txt_hrAprov_division" name="txt_hrAprov_division" class="form-control" readonly>
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="col-md-12">
+													<label class="control-label">Approval</label><br>
+													<div class="radio">
+														<label>
+															<input type="radio" id="rd_aprovGestor_division" name="rd_aprovGestor_division" value="sim" >
+															Approved
+														</label>
+														<label>
+															<input type="radio" id="rd_aprovGestor_division" name="rd_aprovGestor_division" value="nao" >
+															Denied
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group row"> 
+												<div class="col-md-12">
+													<label class="control-label">Feedback</label>
+													<textarea class="form-control rounded-0" id="descricao_division" name="descricao_division" rows="3"></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- DIVISION HEAD FIM -->
+						
+						<!-- VP -->
+						<div class="panel panel-default" id="divVP">
+							<div class="panel-heading fs-cursor-pointer">
+								<h3 class="panel-title">
+									<b class="tituloB" data-toggle="collapse" data-target="#collapseVP" data-parent="divVP" style="font-size: 13pt">VP Approval</b>
+								</h3>
+							</div>
+							<div id="collapseVP" class="collapse" aria-expanded="true" style>
+								<div class="panel-body fundoCinza">
+									<div id="divVPApproval">
+										<label class="control-label tituloDiv">VP Approval</label>
+										<div class="bordaDiv">
+											<div class="form-group row">
+												<div class="col-md-4">
+													<label class="control-label">Responsible:</label>
+													<input type="text" id="txt_gestor_vp" name="txt_gestor_vp" class="form-control" readonly>
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Date</label>
+													<input type="text" id="txt_dtaprov_vp" name="txt_dtaprov_vp" class="form-control" readonly>
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Hour:</label>
+													<input type="text" id="txt_hrAprov_vp" name="txt_hrAprov_vp" class="form-control" readonly>
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="col-md-12">
+													<label class="control-label">Approval</label><br>
+													<div class="radio">
+														<label>
+															<input type="radio" id="rd_aprovGestor_vp" name="rd_aprovGestor_vp" value="sim" >
+															Approved
+														</label>
+														<label>
+															<input type="radio" id="rd_aprovGestor_vp" name="rd_aprovGestor_vp" value="nao" >
+															Denied
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group row"> 
+												<div class="col-md-12">
+													<label class="control-label">Feedback</label>
+													<textarea class="form-control rounded-0" id="descricao_vp" name="descricao_vp" rows="3"></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- VP FIM -->
+						
+						
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</body>
+</html>

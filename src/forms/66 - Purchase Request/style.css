@@ -1,0 +1,61 @@
+.bordaDiv{
+	margin-left: 1%;
+	border-radius: 15px;
+	border: 1px solid #ccc;
+	width: 98%;
+	padding: 1% 2% 1% 2%;
+	background-color: #ffffff !important;
+}
+
+.fluig-style-guide .input-group-addon {
+	border: 1px solid #25476a!important;
+	background-color: #25476a!important;
+	color: #FFF !important;
+}
+
+.select2-fluigicon-zoom{
+    background-color:#25476a !important;
+    color:white !important;
+}
+
+.btn.btn-primary{
+    background-color:#25476a !important;
+    border-color:#25476a !important;
+}
+
+.btn-primary {
+	background-color: #0080ff;
+}
+
+.tituloDiv{
+	margin-left: 2%; 
+	font-size: 12pt;
+	color: #25476a;
+	font-weight: bold;
+	font-size: 13pt;
+}
+
+.tituloDivFilho{
+	margin-left: 2%; 
+	font-size: 11pt;
+}
+
+.fundoCinza{
+	background-color: #80808024 !important;
+}
+
+.tituloB{
+	color: #ffffff;
+}
+
+.panel-heading{
+	background-color: #25476a !important;
+	border-color: #25476a !important;
+}
+
+.atencao{
+	font-size: 12pt;
+	color: #ff0000;
+	font-weight: bold;
+	font-size: 13pt;
+}

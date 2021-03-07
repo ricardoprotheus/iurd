@@ -1,0 +1,400 @@
+<html>
+<head>
+	<link type="text/css" rel="stylesheet" href="/style-guide/css/fluig-style-guide.min.css"/>
+	<link type="text/css" rel="stylesheet" href="style.css" />
+	<script type="text/javascript" src="/portal/resources/js/jquery/jquery.js"></script>
+	<script type="text/javascript" src="/portal/resources/js/jquery/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="/portal/resources/js/mustache/mustache-min.js"></script>
+	<script type="text/javascript" src="/style-guide/js/fluig-style-guide.min.js" charset="utf-8"></script>
+	<script type="text/javascript" src="freedom_lib.js" charset="utf-8"></script>
+	<script type="text/javascript" src="jquery.maskMoney.min.js" charset="utf-8"></script>
+	<script type="text/javascript" src="jquery.mask.min.js" charset="utf-8"></script>
+	<script type="text/javascript" src="funcoes.js"></script>
+	<script src="/webdesk/vcXMLRPC.js"></script>
+</head>
+<body onload="loadform();">
+	<div class="fluig-style-guide">
+		<form name="form" role="form">
+			<input type="hidden" id="name_report" name="name_report" value="HR"/>
+			<input type="hidden" id="hd_numProcesso" name="hd_numProcesso"/>
+			<!-- CONSTANTES DO PROCESSO DE WF -->
+			<input type="hidden" id="ATIV_INICIAL" name="ATIV_INICIAL" value="4"/>
+			<input type="hidden" id="ATIV_STATE_LEADER" name="ATIV_STATE_LEADER" value="5"/>
+			<input type="hidden" id="ATIV_DPT_HEAD" name="ATIV_DPT_HEAD" value="14"/>
+			<input type="hidden" id="ATIV_SUPERVISOR" name="ATIV_SUPERVISOR" value="18"/>
+			
+			<input type="hidden" id="nextResponsible" name="nextResponsible" value=""/>
+			<input type="hidden" id="emailSecretary" name="emailSecretary" value=""/>
+
+			<!-- CONSTANTES DO PROCESSO DE WF - FIM -->
+			
+			<div class="tab-content">
+				<div id="home" class="tab-pane fade in active">
+					<div class="panel-group" id="accordion">
+						<div class="panel panel-default" id="divInfoGeral">
+							<div class="panel-heading fs-cursor-pointer">
+								<h3 class="panel-title">
+									<b class="tituloB up" data-toggle="collapse" data-target="#collapse11" data-parent="#divInfoGeral" style="font-size: 13pt">HR Request</b>
+								</h3>
+							</div>
+							<div id="collapse11" class="collapse" aria-expanded="true" style>
+								<div class="panel-body fundoCinza">
+									<div id="divInfomacaoGeral">
+										<label class="control-label tituloDiv">Request Data</label>
+										<div class="bordaDiv">
+											<div>
+												<input type="hidden" id="aux1" name="aux1" value="">
+												<input type="hidden" id="aux2" name="aux2" value="">
+												<input type="hidden" id="aux3" name="aux3" value="">
+											</div>
+											<div class="form-group row">
+												<div class="col-md-5">
+													<label class="control-label">Requester</label>
+													<input type="text" readonly id="txt_solicitante" name="txt_solicitante" class="form-control">
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Date Requested</label>
+													<input type="text" readonly id="txt_data_sol" name="txt_data_sol" class="form-control">
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Hour</label>
+													<input type="text" readonly name="txt_hourFirst" id="txt_hourFirst" class="form-control">
+												</div>
+											</div>
+											<div class="form-group row" style="display:none;">
+												<input type="text" id="atividade" name="atividade">
+											</div>
+											
+											<div class="form-group row">
+												<div class="col-md-3">
+													<label>State</label>
+													<input type="hidden" name="code_state" id="code_state" class="form-control" readonly>
+													<input type="zoom" id='zoom_state' name='zoom_state' data-zoom="{
+														'displayKey':'code',
+														'datasetId':'states',
+														'maximumSelectionLength':'1',
+														'placeholder':'Choose the state',
+														'fields':[
+															{
+																'field':'code',
+																'label':'States'
+															},{
+																'field':'description',
+																'label':'Description'
+															}
+														]
+													}" 
+													/>
+												</div>
+												<div class="col-md-6">
+													<label>State Description</label>
+													<input type="text" name="name_state" id="name_state" class="form-control" readonly>
+												</div>
+											</div>
+											
+											<div class="form-group row">
+												<div class="col-md-9">
+													<label class="control-label">Address</label>
+													<input type="text" id="txt_address" name="txt_address" class="form-control" style="margin-top: 3px;">
+												</div>
+											</div>
+											
+										</div>
+										
+										
+										<label class="control-label tituloDiv">Requisition Information</label>
+										<div class="bordaDiv">
+											<div class="form-group row">
+												<div class="col-md-4">
+													<label class="control-label">Request</label><br>
+													<div class="radio">
+														<div class="col-md-4">
+															<label>
+																<input type="radio" id="rd_requisicao" name="rd_requisicao" value="novaContratacao">New Hire
+															</label>
+														</div>
+														<div class="col-md-4">	
+															<label>
+																<input type="radio" id="rd_requisicao" name="rd_requisicao" value="longoDoTempo">Overtime
+															</label>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<label class="control-label">Select what applies for this request</label><br>
+													<div class="radio">
+														<div class="col-md-4">
+															<label>
+																<input type="radio" id="rd_aplicacao" name="rd_aplicacao" value="funcionarios">Staff
+															</label>
+														</div>
+														<div class="col-md-4">	
+															<label>
+																<input type="radio" id="rd_aplicacao" name="rd_aplicacao" value="executivo">Ministerial
+															</label>
+														</div>	
+													</div>
+												</div>
+											</div>
+											
+											<div class="form-group row">
+												<div class="col-md-7">
+													<label class="control-label">Full Name of Employee</label>
+													<input type="text" id="txt_nomeCompleto" name="txt_nomeCompleto" class="form-control" style="margin-top: 3px;">
+												</div>
+												<div class="col-md-3">	
+													<label class="control-label" >Start Date</label>
+													<input type="text" id="start_date" name="start_date" class="form-control readonly-date" style="margin-top: 3px;" readonly >
+												</div>
+											</div>
+											
+											<div class="form-group row">
+												<div class="col-md-4">
+													<label class="control-label">Will the new hire be a staff member or a clergy?</label><br>
+													<div class="radio">
+														<div class="col-md-3">
+															<label>
+																<input type="radio" id="rd_tipoMembro" name="rd_tipoMembro" value="funcionarios">Staff
+															</label>
+														</div>
+														<div class="col-md-3">	
+															<label>
+																<input type="radio" id="rd_tipoMembro" name="rd_tipoMembro" value="clero">Clergy
+															</label>
+														</div>	
+													</div>
+												</div>
+												<div class="col-md-4">
+													<label class="control-label">Does the new hire wish to enroll in our Health Plan?</label><br>
+													<div class="radio">
+														<div class="col-md-3">
+															<label>
+																<input type="radio" id="rd_planoSaude" name="rd_planoSaude" value="sim">Yes
+															</label>
+														</div>
+														<div class="col-md-3">	
+															<label>
+																<input type="radio" id="rd_planoSaude" name="rd_planoSaude" value="nao">No
+															</label>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<label class="control-label">Does the new hire wish to setup direct deposit for them?</label><br>
+													<div class="radio">
+														<div class="col-md-3">
+															<label>
+																<input type="radio" id="rd_configurarDeposito" name="rd_configurarDeposito" value="sim">Yes
+															</label>
+														</div>	
+														<div class="col-md-3">
+															<label>
+																<input type="radio" id="rd_configurarDeposito" name="rd_configurarDeposito" value="nao">No
+															</label>
+														</div>	
+													</div>
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="col-md-12">
+													<br>
+													<label class="control-label">Added Notes (regarding any documents attatched or general details of the form)</label>
+													<textarea class="form-control rounded-0" id="notas" name="notas" rows="3"></textarea>
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="col-md-6">
+													<label class="control-label">Are there any documents you would like to attach to this form?</label><br>
+													<div class="radio">
+														<label>
+															<input type="radio" id="rd_documentos" name="rd_documentos" value="sim">Yes
+														</label>
+														<label>
+															<input type="radio" id="rd_documentos" name="rd_documentos" value="nao">No
+														</label>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<!-- INICIO STATE LEADER -->
+						<div class="panel panel-default" id="divAprovacao">
+							<div class="panel-heading fs-cursor-pointer">
+								<h3 class="panel-title">
+									<b class="tituloB up" data-toggle="collapse" data-target="#collapse12" data-parent="#divAprovacao" style="font-size: 13pt">State Leader Approval</b>
+								</h3>
+							</div>
+							<div id="collapse12" class="collapse" style>
+								<div class="panel-body fundoCinza">
+									<div id="divAprova">
+										<label class="control-label tituloDiv">State Leader Approval</label>
+										<div class="bordaDiv">
+											<div class="form-group row">
+												<div class="col-md-4">
+													<label class="control-label">Responsible:</label>
+													<input type="text" id="txt_gestor" name="txt_gestor" class="form-control" readonly>
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Date:</label>
+													<input type="text" id="txt_dataAprovacao" name="txt_dataAprovacao" class="form-control" readonly>
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Hour:</label>
+													<input type="text" id="txt_horaAprovacao" name="txt_horaAprovacao" class="form-control" readonly>
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="col-md-12">
+													<label class="control-label">Approval</label><br>
+													<div class="radio">
+														<label>
+															<input type="radio" id="rd_aprovacaoGestor" name="rd_aprovacaoGestor" value="sim">
+															Approved
+														</label>
+														<label>
+															<input type="radio" id="rd_aprovacaoGestor" name="rd_aprovacaoGestor" value="nao">
+															Denied
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group row"> 
+												<div class="col-md-12">
+													<label class="control-label">Feedback</label>
+													<textarea class="form-control rounded-0" id="descricao" name="descricao" rows="3"></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<!-- FIM STATE LEADER -->
+						
+						
+						<!-- DPT HEAD INICIO -->
+						
+						<div class="panel panel-default" id="divDepartmentHead">
+							<div class="panel-heading fs-cursor-pointer">
+								<h3 class="panel-title">
+									<b class="tituloB" data-toggle="collapse" data-target="#collapseDepartment"	data-parent="#divDepartmentHead" style="font-size: 13pt">Department Head</b>
+								</h3>
+							</div>
+							<div id="collapseDepartment" class="collapse">
+								<div class="panel-body fundoCinza">
+									
+									<div id="divDeptHeaderApproval">
+										<label class="control-label tituloDiv">Dpt Head Approval</label>
+										<div class="bordaDiv">
+											<div class="form-group row">
+												<div class="col-md-4">
+													<label class="control-label">Responsible:</label>
+													<input type="text" readonly name="txt_responsibleDeptHead" id="txt_responsibleDeptHead" class="form-control">
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Date:</label>
+													<input type="text" readonly name="txt_dateDeptHead" id="txt_dateDeptHead"	class="form-control">
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Hour:</label>
+													<input type="text" readonly name="txt_hourDeptHead" id="txt_hourDeptHead"	class="form-control">
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="col-md-12">
+													<label class="control-label">Approval</label>
+													<div class="radio">
+														<label>
+															<input type="radio" name="rd_deptHead" id="rd_deptHead" value="sim">
+															Approved
+														</label>
+														<label>
+															<input type="radio" name="rd_deptHead" id="rd_deptHead" value="nao">
+															Denied
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="col-md-12">
+													<label class="control-label">Feedback</label>
+													<textarea class="form-control" id="txt_feedbackDeptHead" name="txt_feedbackDeptHead" rows="3"></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+										
+								</div>
+							</div>
+						</div>
+						<!-- DPT HEAD FIM -->
+						
+						<!-- SUPERVISOR INICIO -->
+						
+						<div class="panel panel-default" id="divSupervisor">
+							<div class="panel-heading fs-cursor-pointer">
+								<h3 class="panel-title">
+									<b class="tituloB" data-toggle="collapse" data-target="#collpaseSuperVisor"	data-parent="#divSuperVisor" style="font-size: 13pt">Supervisor</b>
+								</h3>
+							</div>
+							<div id="collpaseSuperVisor" class="collapse">
+								<div class="panel-body fundoCinza">
+									<div id="divSupervisor">
+										<label class="control-label tituloDiv">Supervisor Approval</label>
+										<div class="bordaDiv">
+											<div class="form-group row">
+												<div class="col-md-4">
+													<label class="control-label">Responsible:</label>
+													<input type="text" id="txt_gestor_supervisor" name="txt_gestor_supervisor" class="form-control" readonly>
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Date</label>
+													<input type="text" id="txt_dataAprovacao_supervisor" name="txt_dataAprovacao_supervisor" class="form-control" readonly>
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Hour:</label>
+													<input type="text" id="txt_horaAprovacao_supervisor" name="txt_horaAprovacao_supervisor" class="form-control" readonly>
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="col-md-12">
+													<label class="control-label">Approval</label><br>
+													<div class="radio">
+														<label>
+															<input type="radio" id="rd_aprovacaoGestor_supervisor" name="rd_aprovacaoGestor_supervisor" value="sim">
+															Approved
+														</label>
+														<label>
+															<input type="radio" id="rd_aprovacaoGestor_supervisor" name="rd_aprovacaoGestor_supervisor" value="nao">
+															Denied
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group row"> 
+												<div class="col-md-12">
+													<label class="control-label">Feedback</label>
+													<textarea class="form-control rounded-0" id="descricao_supervisor" name="descricao_supervisor" rows="3"></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						
+						<!-- SUPERVISOR FIM -->
+						
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</body>
+</html>

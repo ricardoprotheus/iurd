@@ -1,0 +1,83 @@
+<html>
+<head>
+	<link type="text/css" rel="stylesheet" href="/style-guide/css/fluig-style-guide.min.css"/>
+	<script type="text/javascript" src="/portal/resources/js/jquery/jquery.js"></script>
+	<script type="text/javascript" src="/portal/resources/js/jquery/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="/portal/resources/js/mustache/mustache-min.js"></script>
+	<script type="text/javascript" src="/style-guide/js/fluig-style-guide.min.js" charset="utf-8"></script>
+	<script type="text/javascript" src="/TDIZOOM/resources/js/gd-lib.js"></script>
+	<script type="text/javascript" src="/TDIZOOM/resources/js/jMask.js"></script>
+	<link type="text/css" rel="stylesheet" href="/TDIZOOM/resources/css/TDIZOOM.css">
+	<script type="text/javascript" src="script.js"></script>
+</head>
+<body>
+	<div class="fluig-style-guide">
+		<form name="form" role="form">
+			<div class="panel panel-default">
+				<div class="panel-heading">Cabecalho Pedido</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-3">
+							<label class="control-label">Filial</label>
+							<input class="form-control" id="filial" name="filial" />
+						</div>
+						<div class="col-md-3">  
+							<label class="control-label">Fornecedor</label>
+							<div class="input-group">
+								<input class="form-control" type="text" name="fornecedor" id="fornecedor" readonly>
+								<div class="input-group-addon" style="cursor:pointer;" onclick="javascript:zoomFornecedor(this)"><span class="fluigicon fluigicon-zoom-in fluigicon-sm" ></span></div>
+							</div>    
+						</div>
+						<div class="col-md-3">
+							<label class="control-label">Loja</label>
+							<input class="form-control" id="loja" name="loja" />
+						</div>
+						<div class="col-md-3">
+							<label class="control-label">Data de Emissao</label>
+							<input class="form-control" id="emissao" name="emissao" />
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Itens do Pedido</h3>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<table class="table table-stripped" id="produtos" tablename="produtos" noaddbutton="true" customFnDelete="fnCustomDelete(this)">	
+							<thead>
+								<tr>
+									<th style="width: 20%">Item</th>
+									<th style="width: 40%">Produto</th>
+									<th style="width: 40%">Valor</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>
+										<input class="form-control" id="item" name="item" readonly="readonly" />
+									</td>
+									<td>
+										<div class="input-group">
+											<input class="form-control" type="text" name="produto" id="produto" readonly>
+											<div class="input-group-addon" style="cursor:pointer;" onclick="javascript:zoomProduto(this)"><span class="fluigicon fluigicon-zoom-in fluigicon-sm" ></span></div>
+										</div>
+									</td>
+									<td>
+										<input class="form-control mValor valida-valor" id="valor" name="valor" />
+									</td>
+								</tr>
+							</tbody>	
+						</table>
+						<div class="col-md-12">
+                        	<input type="hidden" class="form-control" name="linha_produto" id="linha_produto"/>
+                        	<input class="btn btn-default" type="button" value="Adicionar" onclick="addProduto();" id="add_produto">
+                        </div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</body>
+</html>

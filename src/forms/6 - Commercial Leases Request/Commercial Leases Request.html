@@ -1,0 +1,1078 @@
+<html>
+<head>
+	<link type="text/css" rel="stylesheet" href="/style-guide/css/fluig-style-guide.min.css" />
+	<link type="text/css" rel="stylesheet" href="style.css" />
+	<script type="text/javascript" src="/portal/resources/js/jquery/jquery.js"></script>
+	<script type="text/javascript" src="/portal/resources/js/jquery/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="/portal/resources/js/mustache/mustache-min.js"></script>
+	<script type="text/javascript" src="/style-guide/js/fluig-style-guide.min.js" charset="utf-8"></script>
+	<script type="text/javascript" src="freedom_lib.js" charset="utf-8"></script>
+	<script type="text/javascript" src="jquery.maskMoney.min.js" charset="utf-8"></script>
+	<script type="text/javascript" src="jquery.mask.min.js" charset="utf-8"></script>
+	<script type="text/javascript" src="funcoes.js"></script>
+	<script type="text/javascript" src="/webdesk/vcXMLRPC.js"></script>
+</head>
+<body onload="loadform();">
+	<div class="fluig-style-guide">
+		<form name="form" role="form">
+			<textarea id="hd_json" name="hd_json" cols="30" rows="10" style="display:none"></textarea>
+			<input type="hidden" id="name_report" name="name_report" value="COMMERCIAL"/>
+			<input type="hidden" id="hd_numProcesso" name="hd_numProcesso"/>
+			<input type="hidden" id="auxtipoRequisicao" name="auxtipoRequisicao" value="">
+			<input type="hidden" id="auxRdOrigProcGenerFluig" name="auxRdOrigProcGenerFluig" value="">
+			<input type="hidden" id="auxCancelOriginal" name="auxCancelOriginal" value="">
+			<!-- CONSTANTES DO PROCESSO DE WF -->
+			<input type="hidden" id="ATIV_INICIAL" name="ATIV_INICIAL" value="4"/>
+			<input type="hidden" id="ATIV_STATE_LEADER" name="ATIV_STATE_LEADER" value="5"/>
+			<!--  <input type="hidden" id="ATIV_NATIONAL_LEADER" name="ATIV_NATIONAL_LEADER" value="25"/>  --> 
+			<input type="hidden" id="ATIV_COMMERCIAL_APPROVAL" name="ATIV_COMMERCIAL_APPROVAL" value="56"/>
+			<input type="hidden" id="ATIV_DIVISION" name="ATIV_DIVISION" value="30"/>
+			<input type="hidden" id="ATIV_VP" name="ATIV_VP" value="35"/>
+			<input type="hidden" id="ATIV_COMMERCIAL_FIM" name="ATIV_COMMERCIAL_FIM" value="39"/>
+			
+			<input type="hidden" id="nextResponsible" name="nextResponsible" value=""/>
+			<input type="hidden" id="emailSecretary" name="emailSecretary" value=""/>
+			
+			<!-- CONSTANTES DO PROCESSO DE WF - FIM -->
+			<div class="tab-content">
+				<div id="home" class="tab-pane fade in active">
+					<div class="panel-group" id="accordion">
+						
+						<!-- SECRETARY INICIO -->
+						<div class="panel panel-default" id="divInfoGeral">
+							<div class="panel-heading fs-cursor-pointer">
+								<h3 class="panel-title">
+									<b class="tituloB up" data-toggle="collapse" data-target="#collapse11" data-parent="#divInfoGeral" style="font-size: 13pt">Commercial Leases Request</b>
+								</h3>
+							</div>
+							<div id="collapse11" class="collapse" aria-expanded="true" style>
+								<div class="panel-body fundoCinza">
+									<div id="divInfomacaoGeral">
+										<label class="control-label tituloDiv">Request Data</label>
+										<div class="bordaDiv">
+											<div>
+												<input type="hidden" id="aux1" name="aux1" value="">
+												<input type="hidden" id="aux2" name="aux2" value="">
+												<input type="hidden" id="aux3" name="aux3" value="">
+												<input type="hidden" id="auxRadioChurch" name="auxRadioChurch" value="">
+												<input type="hidden" id="auxRadioCOReason" name="auxRadioCOReason" value="">
+												<input type="hidden" id="auxZoneArea" name="auxZoneArea" value="">
+												<input type="hidden" id="auxContract" name="auxContract" value="">
+												<input type="hidden" id="auxMudancaCO" name="auxMudancaCO" value="">
+												<input type="hidden" id="auxAgendamento" name="auxAgendamento" value="">
+												<input type="hidden" id="auxResponsible" name="auxResponsible" value="">
+												<input type="hidden" id="auxTipoAplicacao" name="auxTipoAplicacao" value="">
+											</div>
+											<div class="form-group row">
+												<div class="col-md-4">
+													<label class="control-label">Requester</label> 
+													<input type="text" readonly id="txt_solicitante" name="txt_solicitante" class="form-control">
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Date Requested</label> 
+													<input type="text" readonly id="txt_data_sol" name="txt_data_sol" class="form-control">
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Hour</label> 
+													<input type="text" readonly name="txt_hourFirst" id="txt_hourFirst" class="form-control">
+												</div>
+											</div>
+											<div class="form-group row" style="display: none;">
+												<input type="text" id="atividade" name="atividade">
+											</div>
+
+										</div>
+										
+										<br>
+										
+										<div id="divComercial">
+											<label class="control-label tituloDiv">Commercial Lease Initial Details</label>
+											<div class="bordaDiv">
+												
+												<div class="form-group row">
+													<label class="control-label">What type of lease is being requested?</label><br>
+													<div class="radio">
+														<div class="col-md-1">
+															<label> 
+																<input type="radio" id="txt_tipoRequisicao" name="txt_tipoRequisicao" value="novo" onclick="selectLeaseType();"> New
+															</label> 
+														</div>
+														<div class="col-md-1">
+															<label> 
+																<input type="radio" id="txt_tipoRequisicao" name="txt_tipoRequisicao" value="renovacao" onclick="selectLeaseType();"> Renewal
+															</label>
+														</div> 
+														<div class="col-md-2">
+															<label> 
+																<input type="radio" id="txt_tipoRequisicao" name="txt_tipoRequisicao" value="recisaoAntecip" onclick="selectLeaseType();"> Non-Renewal/Early Termination
+															</label>
+														</div>	
+													</div>
+												</div>
+												
+												<div class="form-group row">
+													<div class="col-md-3">
+														<label>State</label>
+														<input type="hidden" name="code_state" id="code_state" class="form-control" readonly>
+														<input type="zoom" id='zoom_state' name='zoom_state' data-zoom="{
+															'displayKey':'code',
+															'datasetId':'states',
+															'maximumSelectionLength':'1',
+															'placeholder':'Choose the state',
+															'fields':[
+																{
+																	'field':'code',
+																	'label':'States'
+																},{
+																	'field':'description',
+																	'label':'Description'
+																}
+															]
+														}" 
+														/>
+													</div>
+													<div class="col-md-6">
+														<label>State Description</label>
+														<input type="text" name="name_state" id="name_state" class="form-control" readonly>
+													</div>
+												</div>
+												
+												<div class="form-group row">
+													<div class="col-md-6">
+														<label class="control-label">Address?</label> 
+														<input type="text" id="txt_address" name="txt_address" class="form-control">
+													</div>
+												</div>
+												
+												<div class="form-group row" id="div_square">
+													<div class="col-md-4">
+														<label class="control-label">How many square ft does the property consist of?</label> 
+														<input type="text" id="txt_propriedade" name="txt_propriedade" class="form-control">
+													</div>
+												</div>
+												
+												<div class="form-group row">	
+													<label class="control-label">Specify what this lease will apply to:</label><br>
+													<div class="radio">
+														<div class="col-md-2">
+															<label> 
+																<input type="radio" id="txt_tipoAplicacao" name="txt_tipoAplicacao" value="igreja" onClick="checkBuildDetails();"> Church
+															</label>
+														</div>
+														<div class="col-md-2">	 
+															<label> 
+																<input type="radio" id="txt_tipoAplicacao" name="txt_tipoAplicacao" value="servicoEspc" onClick="checkBuildDetails();"> Special Service
+															</label>
+														</div>
+														<div class="col-md-2">	 
+															<label> 
+																<input type="radio" id="txt_tipoAplicacao" name="txt_tipoAplicacao" value="outros" onClick="checkBuildDetails();"> Other
+															</label>
+														</div>
+													</div>	
+													
+												</div>
+												
+												<div class="form-group" id="building_details">
+													<div class="form-group row" >
+														<div class="col-md-3 bordaDiv">
+															<label class="control-label">Does this building have a CO? </label><br>
+															<div class="radio">
+																<div class="col-md-4">
+																	<label> 
+																		<input type="radio" id="txt_confirmACO" name="txt_confirmACO" value="yes" onClick="checkCOReason();"> Yes
+																	</label>
+																</div>
+																<div class="col-md-4">	 
+																	<label> 
+																		<input type="radio" id="txt_confirmACO" name="txt_confirmACO" value="no" onClick="checkCOReason();"> No
+																	</label>
+																</div>
+															</div>
+														</div>
+														<div class="col-md-8">
+															<label class="control-label">If not, please explain it.</label>  
+															<textarea class="form-control rounded-0" id="co_reason" name="co_reason" rows="2"></textarea>
+														</div>
+													</div>
+													
+													<div class="form-group row">	
+														<div class="col-md-3 bordaDiv" >
+															<label class="control-label">Has secretary confirmed with the city if this building is in Zoning Area to open as a church?</label><br>
+															<div class="radio">
+																<div class="col-md-4">
+																	<label> 
+																		<input type="radio" id="txt_confirArea" name="txt_confirArea" value="yes" onClick="checkZoneArea();"> Yes
+																	</label> 
+																</div>
+																<div class="col-md-4">
+																	<label> 
+																		<input type="radio" id="txt_confirArea" name="txt_confirArea" value="no" onClick="checkZoneArea();"> No
+																	</label>
+																</div>	
+															</div>
+														</div>	
+														<div class="col-md-8">
+															<label class="control-label">If not, please explain it.</label>  
+															<textarea class="form-control rounded-0" id="zone_area_reason" name="zone_area_reason" rows="3"></textarea>
+														</div>
+													</div>
+													
+													<div class="form-group row">		
+														<div class="col-md-4 bordaDiv">
+															<label class="control-label">Will there be any fees for the change of CO?</label><br>
+															<div class="radio">
+																<div class="col-md-4">
+																	<label> 
+																		<input type="radio" id="mudancaCO" name="mudancaCO" value="sim" onClick="checkFees();"> Yes
+																	</label>
+																</div>
+																<div class="col-md-4">	 
+																	<label> 
+																		<input type="radio" id="mudancaCO" name="mudancaCO" value="nao" onClick="checkFees();"> No
+																	</label>
+																</div>	
+															</div>
+														</div>
+														<div class="col-md-3 bordaDiv" >	
+														
+															<label class="control-label">Please include the Fee for the Change of CO.</label> 
+															<input placeholder="0.00" type="text" id="txt_taxaMudanca" name="txt_taxaMudanca" class="form-control" style="margin-top: 3px;">
+														</div>	
+													</div>
+													
+													<!-- SOLICITADO PELO CLIENTE TIRAR ESTES DOIS CAMPOS - EMAIL 20200818
+													<div class="form-group row">
+														<div class="col-md-4 bordaDiv">
+															<label class="control-label">Please obtain NL Approval for the CO and Submit a WEBFORM through Maintenance.</label><br>
+															<div class="checkbox">
+																<label> 
+																	<input type="checkbox" id="ck_confirm" name="ck_confirm" value="1"> OK
+																</label>
+															</div>
+														</div>
+														
+														<div class="col-md-3 bordaDiv">
+															<label class="control-label">Is the CO & Violation clause added to the lease?</label><br>
+															<div class="radio">
+																<div class="col-md-4">	
+																	<label> 
+																		<input type="radio" id="clausulaCO" name="clausulaCO" value="sim"> Yes
+																	</label> 
+																</div>
+																<div class="col-md-4">	
+																	<label> 
+																		<input type="radio" id="clausulaCO" name="clausulaCO" value="nao"> No
+																	</label>
+																</div>	
+															</div>
+														</div>
+													</div>
+													 -->
+													<div class="form-group row">
+														<div class="col-md-4 bordaDiv">
+															<label class="control-label">Does this lease have Concessions?</label><br>
+															<div class="radio">
+																<div class="col-md-4">	
+																	<label> 
+																		<input type="radio" id="agendamento" name="agendamento" value="sim" onClick="checkConcessions();"> Yes
+																	</label>
+																</div>
+																<div class="col-md-4">		 
+																	<label> 
+																		<input type="radio" id="agendamento" name="agendamento" value="nao" onClick="checkConcessions();"> No
+																	</label>
+																</div>	
+															</div>
+														</div>
+														
+														<div class="col-md-3 bordaDiv">
+															<label class="control-label">How many months?</label><br>
+															<input type="text" id="concessions_qtd_months" name="concessions_qtd_months" class="form-control">
+														</div>
+													</div>
+													<div class="form-group row">
+														<div class="col-md-4 bordaDiv">
+															<label class="control-label">Are there any improvements that need to be done in the location we are leasing?</label><br>
+															<div class="radio">
+																<div class="col-md-4">	
+																	<label> 
+																		<input type="radio" id="possiveisMelhorias" name="possiveisMelhorias" value="sim"> Yes
+																	</label>
+																</div>
+																<div class="col-md-4">		 
+																	<label> 
+																		<input type="radio" id="possiveisMelhorias" name="possiveisMelhorias" value="nao"> No
+																	</label>
+																</div>	
+															</div>
+														</div>
+													</div>
+													
+												</div>	
+											</div>
+										</div>
+										
+										<div id="divDetalhesPagamento">
+											<label class="control-label tituloDiv">Further Payment Details:</label>
+											<div class="bordaDiv">
+												<div class="form-group row">
+													<div class="col-md-3 ">
+														<label class="control-label">How much will The Owner be paying:</label> 
+														<input placeholder="0.00" type="text" id="txt_valorPago" name="txt_valorPago" class="form-control" >
+													</div>
+													<!-- 
+													<div class="col-md-3">
+														<label class="control-label">Monthly Rent</label> <input placeholder="0.00" type="text" id="txt_aluguelPrePago" name="txt_aluguelPrePago" class="form-control">
+													</div>
+													 -->
+												</div>
+											</div>
+										</div>
+										<div id="divArrendamento">
+											<label class="control-label tituloDiv">New Lease for a Church</label>
+											<div class="bordaDiv">
+												<div class="form-group row" id="div_responsible">
+													<div class="col-md-3 ">
+														<label class="control-label">Who will be responsible to pay for the improvements?</label> 
+														<!-- <input type="text" id="responsavelMelhorias" name="responsavelMelhorias" class="form-control"> -->
+														<div class="radio">
+															<div class="col-md-4">	
+																<label> 
+																	<input type="radio" id="responsavelMelhorias" name="responsavelMelhorias" value="tenant" onClick="checkResponsible();"> Tenant
+																</label>
+															</div>
+															<div class="col-md-4">		 
+																<label> 
+																	<input type="radio" id="responsavelMelhorias" name="responsavelMelhorias" value="landlord" onClick="checkResponsible();"> Landlord
+																</label>
+															</div>	
+															<div class="col-md-4">		 	
+																<label> 
+																	<input type="radio" id="responsavelMelhorias" name="responsavelMelhorias" value="shared" onClick="checkResponsible();"> Shared
+																</label>
+															</div>	
+														</div>
+													</div>
+												</div>
+												
+												
+												
+												<!-- TODO - CRIAR GRID COM A OPCAO DE PORCENTAGEM / VALOR DO SHARED -->
+												<div class="form-group" id="grid_prorat_improv">
+													<!-- - TIRAMOS O BOTAO DE ADD, POIS VAMOS TER SOMENTE DUAS LINHAS NESTE GRID. 
+													<div class="form-group row">
+															<div class="col-md-1">
+															
+															<input class="btn btn-primary" type="button" value="ADD" onclick="addProratImprov('table_prorat_improv');" id="add_prorat_improv">
+														</div>
+													</div>
+													 -->
+													<div class="form-group row">
+														<input type="hidden" class="form-control" name="linha_prorat_improv" id="linha_prorat_improv" /> 
+														<div style="overflow-x: scroll; width: 75%" class="col-md-12">
+															<table class="table table-striped table-bordered" tablename="table_prorat_improv" noaddbutton="true" nodeletebutton="true">
+																<thead>
+																	<tr class="active">
+																		<!-- <th style="width: 1%;"></th>  -->
+																		<th style="text-align: center; width: 50%">Responsible</th>
+																		<th style="text-align: center; width: 25%">Percentage</th>
+																		<th style="text-align: center; width: 25%">Value</th>
+																	</tr>
+																</thead>
+																<tbody>
+																	<tr>
+																		<!-- 
+																		<td>
+																			<span class="fluigicon fluigicon-trash fluigicon-md" id="spnRemoveProrImprov" name="spnRemoveProrImprov" onClick="fnCustomDelete(this);" style="cursor: pointer;"> </span>
+																		</td>
+																		 -->
+																		<td>
+																			<input type="text" id="pror_improv_respons"	name="pror_improv_respons" class="form-control active" readonly>
+																		</td>
+																		<td>
+																			<input type="text" id="pror_improv_percent" name="pror_improv_percent" class="form-control" placeholder="0.00" maxlength="6">
+																		</td>
+																		<td>
+																			<input type="text" id="pror_improv_value" name="pror_improv_value" class="form-control" placeholder="0.00">
+																		</td>
+																	</tr>
+																</tbody>
+															</table>
+														</div>
+													</div>
+												</div>	
+												
+												
+												
+												
+												<!-- TODO - CRIAR GRID COM A OPCAO DE PORCENTAGEM / VALOR DO SHARED -->
+															
+												<div class="form-group row" id="div_month_to_month">
+													<div class="col-md-3 ">
+														<label class="control-label">Is this a month-to-month lease?</label><br>
+														<div class="radio">
+															<div class="col-md-4">	
+																<label> 
+																	<input type="radio" id="contratoMensal" name="contratoMensal" value="yes" onClick="checkContract();"> Yes
+																</label>
+															</div>
+															<div class="col-md-4">		 
+																<label> 
+																	<input type="radio" id="contratoMensal" name="contratoMensal" value="no" onClick="checkContract();"> No
+																</label>
+															</div>	
+														</div>
+													</div>
+													<div class="col-md-3">
+														<label class="control-label">What is the start date of this New M-M lease?</label> 
+														<input type="text" id="txt_data_contrato_inicio" name="txt_data_contrato_inicio" class="form-control" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+													</div>
+													<!-- SOLICITADO PELO CLIENTE TIRAR ESTE CAMPO - EMAIL 20200818
+													<div class="col-md-3">
+														<label class="control-label">What is the end date of this New M-M lease?</label> 
+														<input type="text" id="txt_data_contrato_fim" name="txt_data_contrato_fim" class="form-control" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+													</div>
+													 -->
+												</div>	
+												
+												<div class="form-group row">
+													<div class="col-md-8">
+														<label class="control-label">Are there any fees associated with this New Lease?</label><br>
+													</div>
+												</div>
+												
+												<div class="form-group row">
+													<div class="col-md-2">
+														<label class="control-label" >Fee ($)</label>
+														<input type="text" id="application_fee_value" name="application_fee_value" class="form-control" placeholder="0.00" onblur="sumTotal()">
+													</div>
+													<div class="col-md-2">	
+														<label class="control-label" >Fee Due Date</label><br>
+														<input type="text" id="due_date_fee" name="due_date_fee" class="form-control readonly-date" readonly>
+													</div>
+													<div class="col-md-6">
+														<label class="control-label">Description</label> 
+														<input type="text" id="desc_fee" name="desc_fee" class="form-control">
+													</div>
+												</div>
+												
+												
+												<div class="form-group row" id="div_single_deposit">	
+													<div class="col-md-3">
+														<label class="control-label">Security Deposit</label> 
+														<input placeholder="0.00" type="text" id="txt_depositoSeguranca" name="txt_depositoSeguranca" class="form-control" onblur="sumTotal()">
+													</div>
+													<div class="col-md-3">
+														<label class="control-label">Deposit Due Date</label> 
+														<input type="text" id="txt_data_deposit" name="txt_data_deposit" class="form-control">
+													</div>
+												</div>
+												<div class="form-group row">
+													<div class="col-md-12">
+														<br> 
+														<label class="control-label">Notes:</label>
+														<textarea class="form-control rounded-0" id="notes_new_lease" name="notes_new_lease" rows="3"></textarea>
+													</div>
+												</div>
+												
+												<div id="divRentals">
+													<label class="control-label tituloDivFilho">Monthly Payment</label>
+													<div class="bordaDiv">
+														<div class="form-group row">
+															<div class="col-md-1">
+																<input type="hidden" class="form-control" name="linha_prorating_church" id="linha_prorating_church" /> 
+																<input class="btn btn-primary" type="button" value="ADD" onclick="addChurch('table_prorating_church');" id="add_prorating_church">
+															</div>
+														</div>
+														<div class="form-group row">
+															<div style="overflow-x: scroll; width: 100%" class="col-md-12">
+																<table class="table table-striped table-bordered" tablename="table_prorating_church" noaddbutton="true" nodeletebutton="true">
+																	<thead>
+																		<tr class="active">
+																			<th style="width: 1%;"></th>
+																			<th style="text-align: center; width: 20%">Start Date</th>
+																			<th style="text-align: center; width: 20%">End Date</th>
+																			<th style="text-align: center; width: 15%">Terms in Months</th>
+																			<th style="text-align: center; width: 15%">Due Date</th>
+																			<th style="text-align: center; width: 15%">Monthly Value</th>
+																			<th style="text-align: center; width: 15%">Total</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		<tr>
+																			<td>
+																				<span class="fluigicon fluigicon-trash fluigicon-md" id="spnRemoveProrating" name="spnRemoveProrating" onClick="fnCustomDelete(this);" style="cursor: pointer;"> </span>
+																			</td>
+																			<td>
+																				<input type="text" id="prorating_start_date" name="prorating_start_date" class="form-control" readonly onblur="setInstallment(this)">
+																			</td>
+																			<td>
+																				<input type="text" id="prorating_end_date"	name="prorating_end_date" class="form-control" readonly onblur="setInstallment(this)">
+																			</td>
+																			<td>
+																				<input type="text" id="prorating_qtd_installments" name="prorating_qtd_installments" class="form-control" readonly>
+																			</td>
+																			<td>
+																				<input type="text" id="prorating_due_date" name="prorating_due_date" class="form-control" readonly>
+																			</td>
+																			<td>
+																				<input type="text" id="prorating_church_value" name="prorating_church_value" class="form-control" placeholder="0.00" onblur="sumTotalLine(this)">
+																			</td>
+																			<td>
+																				<input type="text" id="prorating_total" name="prorating_total" class="form-control" placeholder="0.00" readonly>
+																			</td>
+																		</tr>
+																	</tbody>
+																</table>
+															</div>
+														</div>
+														
+														
+													</div>
+												</div>
+												
+												<div class="form-group row">
+													<div class="col-md-4">
+														<label class="control-label">Grand Total Expense</label>
+														<input type="text" placeholder="0.00" id="grand_total" name="grand_total" class="form-control" readonly>
+													</div>
+												</div>	
+												
+												<div class="form-group row">
+													<div class="col-md-12">
+														<br> 
+														<label class="control-label">Added Notes (regarding any documents attatched or general details of the form)</label>
+														<textarea class="form-control rounded-0" id="notas" name="notas" rows="3"></textarea>
+													</div>
+												</div>
+												<!-- SOLICITADO PELO CLIENTE TIRAR CAMPOS - EMAIL 20200818  
+												<div class="form-group row">
+													<div class="col-md-6">
+														<label class="control-label">Are there any documents that come attatched with this form?</label><br>
+														<div class="radio">
+															<label> <input type="radio" id="rd_documentos" name="rd_documentos" value="sim">Yes</label> 
+															<label> <input type="radio" id="rd_documentos" name="rd_documentos" value="nao">No</label>	
+														</div>
+													</div>
+												</div>
+												-->
+												<div class="form-group row">
+													<div class="col-md-6">
+														<label class="control-label atencao" >* Please attach a document to support your request</label><br>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- SECRETARY FIM -->
+						
+						<!-- COMMERCIAL LEASE -->
+						<div class="panel panel-default" id="divCL">
+							<div class="panel-heading fs-cursor-pointer">
+								<h3 class="panel-title">
+									<b class="tituloB" data-toggle="collapse" data-target="#collapseCL" data-parent="divCL" style="font-size: 13pt">Commercial Lease</b>
+								</h3>
+							</div>
+							<div id="collapseCL" class="collapse" aria-expanded="true" style>
+								<div class="panel-body fundoCinza">
+									<div id="divCLApproval">
+										<label class="control-label tituloDiv">Commercial Lease Approval</label>
+										<div class="bordaDiv">
+											<div class="form-group row">
+												<div class="col-md-4">
+													<label class="control-label">Responsible:</label>
+													<input type="text" id="txt_gestor_cl" name="txt_gestor_cl" class="form-control" readonly>
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Date</label>
+													<input type="text" id="txt_dtaprov_cl" name="txt_dtaprov_cl" class="form-control" readonly>
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Hour:</label>
+													<input type="text" id="txt_hrAprov_cl" name="txt_hrAprov_cl" class="form-control" readonly>
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="col-md-12">
+													<label class="control-label">Approval</label><br>
+													<div class="radio">
+														<label>
+															<input type="radio" id="rd_aprovGestor_cl" name="rd_aprovGestor_cl" value="sim" >
+															Approved
+														</label>
+														<label>
+															<input type="radio" id="rd_aprovGestor_cl" name="rd_aprovGestor_cl" value="nao" >
+															Denied
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group row"> 
+												<div class="col-md-12">
+													<label class="control-label">Feedback</label>
+													<textarea class="form-control rounded-0" id="descricao_cl" name="descricao_cl" rows="3"></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div id="divCommercialLeaseFim"> 
+										<label class="control-label tituloDiv">Commercial Lease</label>
+										<div class="bordaDiv">
+											
+											<div class="form-group row">
+												<div class="col-md-4">
+													<label class="control-label">Responsible</label> 
+													<input type="text" readonly id="txt_respons_commercial_fim" name="txt_respons_commercial_fim" class="form-control">
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Date Requested</label> 
+													<input type="text" readonly id="txt_data_commercial_fim" name="txt_data_commercial_fim" class="form-control">
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Hour</label> 
+													<input type="text" readonly name="txt_hour_commercial_fim" id="txt_hour_commercial_fim" class="form-control">
+												</div>
+											</div>
+											
+											<div class="form-group row" id="div_church">
+												<div id="registrado">
+													<div class="col-md-3">
+														<label class="control-label">Requesting church</label> 
+														<input type="zoom" class="form-control" id="zoom_igreja" name="zoom_igreja"
+															data-zoom="{
+		                                                       'displayKey':'church',
+		                                                       'datasetId':'churches_get',
+		                                                       'maximumSelectionLength':'1',
+		                                                       'fields':[
+		                                                           {
+		                                                             'field':'church',
+		                                                             'label':'Church'
+		                                                           },{
+		                                                        	   'field':'States',
+		                                                        	   'label':'State'
+		                                                           },{
+		                                                        	   'field':'address',
+		                                                        	   'visible':'false'
+		                                                           }
+		                                                       ]
+		                                                    }" />
+													</div>
+													<div class="col-md-1">
+														<label class="control-label">State</label> 
+														<input type="text" id="txt_estado" name="txt_estado" class="form-control" readonly>
+													</div>
+													<div class="col-md-8">
+														<label class="control-label">Address</label> 
+														<input type="text" id="txt_endereco" name="txt_endereco" class="form-control" readonly>
+													</div>
+												</div>
+											</div>
+											
+											<div class="form-group row">	
+												<div class="col-md-4">
+													<label class="control-label">Supplier</label>
+													<input type="zoom" id='zoom_supplier' name='zoom_supplier' data-zoom="{
+														'displayKey':'name',
+														'datasetId':'supplier',
+														'maximumSelectionLength':'1',
+														'placeholder':'Choose the supplier',
+														'fields':[
+															{
+																'field':'code',
+																'label':'Code'
+															},{
+																'field':'unit',
+																'label':'Unit'
+															},{
+																'field':'name',
+																'label':'Name'
+															}
+														]
+													}" 
+													/>
+												</div>
+												<!-- 
+												<input type="hidden" id="txt_supplier" name="txt_supplier" class="form-control" >
+												<div class="col-md-1">
+													<label class="control-label">Unit</label>
+													<input type="text" id="txt_unit" name="txt_unit" class="form-control" readonly>
+												</div>
+												<div class="col-md-8">
+													<label class="control-label">Description</label>
+													<input type="text" id="txt_description" name="txt_description" class="form-control" readonly>
+												</div>
+												 -->
+												<input type="hidden" id="txt_supplier" name="txt_supplier" class="form-control" >
+												<input type="hidden" id="txt_unit" name="txt_unit" class="form-control" >
+												<input type="hidden" id="txt_description" name="txt_description" class="form-control" >	
+												
+												<div class="col-md-4">
+													<label class="control-label">GL Code</label>
+													<input type="hidden" name="gl_code" id="gl_code" class="form-control" >
+													<input type="zoom" id='classes' name='classes' data-zoom="{
+														'displayKey':'descri',
+														'datasetId':'classes',
+														'maximumSelectionLength':'1',
+														'placeholder':'Choose the class',
+														'fields':[
+															{
+																'field':'code',
+																'label':'Code'
+															},{
+																'field':'descri',
+																'label':'Description'
+															}
+														]
+														}" 
+													/>	
+												</div>
+												
+											</div>
+											
+											<div id="row_fluig_process">
+												<div class="form-group row">
+													<div class="col-md-5">
+														<label class="control-label">The original process was generated on fluig?</label><br>
+														<div class="radio">
+															<div class="col-md-2">
+																<label> 
+																	<input type="radio" id="rd_orig_proc_gener_fluig" name="rd_orig_proc_gener_fluig" value="sim" onclick="selectOrigProcess(this);"> Yes
+																</label>
+															</div>
+															<div class="col-md-2">	 
+																<label> 
+																	<input type="radio" id="rd_orig_proc_gener_fluig" name="rd_orig_proc_gener_fluig" value="nao" onclick="selectOrigProcess(this);"> No
+																</label>
+															</div>
+														</div>
+													</div>
+												</div>
+												
+												<div class="form-group row">
+													<div class="col-md-3" id="fluig_orig_input">
+														<label>Original</label>
+														<label name="label_original" id="label_original"/><b> Fluig Process</b></label>
+														<input type="text" name="original_fluig_process" id="original_fluig_process" class="form-control">
+													</div>
+													<div class="col-md-3" id="fluig_orig_zoom">
+														<label>Original Fluig Process</label>
+														<input type="zoom" id='fluig_process_zoom' name='fluig_process_zoom' data-zoom="{
+															'displayKey':'procfluig',
+															'datasetId':'procfluig',
+															'maximumSelectionLength':'1',
+															'placeholder':'Original Process',
+															'fields':[
+																{
+																	'field':'procfluig',
+																	'label':'Processo Fluig'
+																},{
+																	'field':'Value',
+																	'label':'Value'
+																}
+															]
+															}" 
+														/>	
+													</div>
+													<!-- 
+													<div class="col-md-3" id="column_original_value">	
+														<label class="control-label" >Original Rental Value</label><br>
+														<input type="text" id="rental_orig_process_value" name="rental_orig_process_value" placeholder="0.00" class="form-control" onblur="sumDifference()">
+														<input type="hidden" id="aux_rent_orig_proc_val" name="aux_rent_orig_proc_val" class="form-control">
+													</div>
+													 -->
+												</div>
+											</div>
+											
+											
+											
+											<div class="form-group row" id="row_cancel_original">
+												<div class="col-md-4">
+													<label class="control-label">Do you want to cancel the financial for the original process on Protheus?</label><br>
+													<div class="radio">
+														<div class="col-md-2">
+															<label> 
+																<input type="radio" id="rd_cancel_original" name="rd_cancel_original" value="sim" onclick="cancelOriginal(this);"> Yes
+															</label>
+														</div>
+														<div class="col-md-2">	 
+															<label> 
+																<input type="radio" id="rd_cancel_original" name="rd_cancel_original" value="nao" onclick="cancelOriginal(this);"> No
+															</label>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-3">	
+													<label class="control-label" >Date to cancel the Financial</label><br>
+													<input type="text" id="date_cancel_financial" name="date_cancel_financial" class="form-control readonly-date" readonly >
+												</div>
+											</div>
+											
+											
+											<div class="form-group row">
+											
+												<div class="col-md-4">
+													<label class="control-label">Department</label>
+													<input type="zoom" class="form-control"
+															id="zoom_department" name="zoom_department"
+															data-zoom="{
+																		'displayKey':'descri',
+																		'datasetId':'department',
+																		'maximumSelectionLength':'1',
+																		'fields':[
+																			{
+																			'field':'code',
+																			'label':'Code'
+																			},{
+																				'field':'descri',
+																				'label':'Description'
+																			}
+																	   ]
+																	}" 
+													/>
+													<input type="hidden" id="txt_department_code" name="txt_department_code" class="form-control" readonly>
+													<input type="hidden" id="txt_department_description" name="txt_department_description" class="form-control" readonly>
+												</div>
+												<!-- 
+												<div class="col-md-6">
+													<label class="control-label">Description</label>
+													<input type="text" id="txt_department_description" name="txt_department_description" class="form-control" readonly>
+												</div>
+												 -->
+											</div>
+										
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- COMMERCIAL LEASE -->
+						
+						
+						<!-- STATE LEADER -->
+						<div class="panel panel-default" id="divAprovacao">
+							<div class="panel-heading fs-cursor-pointer">
+								<h3 class="panel-title">
+									<b class="tituloB up" data-toggle="collapse" data-target="#collapse12" data-parent="#divAprovacao" style="font-size: 13pt">State Leader Approval</b>
+								</h3>
+							</div>
+							<div id="collapse12" class="collapse" style>
+								<div class="panel-body fundoCinza">
+									<div id="divAprova">
+										<label class="control-label tituloDiv">State Leader Approval</label>
+										<div class="bordaDiv">
+											<div class="form-group row">
+												<div class="col-md-4">
+													<label class="control-label">Responsible:</label> 
+													<input type="text" id="txt_gestor" name="txt_gestor" class="form-control" readonly>
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Date:</label> 
+													<input type="text" id="txt_dataAprovacao" name="txt_dataAprovacao" class="form-control" readonly>
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Hour:</label> 
+													<input type="text" id="txt_horaAprovacao" name="txt_horaAprovacao" class="form-control" readonly>
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="col-md-12">
+													<label class="control-label">Approval</label><br>
+													<div class="radio">
+														<label> 
+															<input type="radio" id="rd_aprovacaoGestor" name="rd_aprovacaoGestor" value="sim" > Approved
+														</label> 
+														<label> 
+															<input type="radio" id="rd_aprovacaoGestor" name="rd_aprovacaoGestor" value="nao" > Denied
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="col-md-12">
+													<label class="control-label">Feedback</label>
+													<textarea class="form-control" id="descricao" name="descricao" rows="3"></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- STATE LEADER FIM -->
+						
+						<!-- NATIONAL LEADER LEADER -->
+						<!-- 
+						<div class="panel panel-default" id="divNationalLeader">
+							<div class="panel-heading fs-cursor-pointer">
+								<h3 class="panel-title">
+									<b class="tituloB" data-toggle="collapse" data-target="#collapseNational" data-parent="divNationalLeader" style="font-size: 13pt">National Leader Approval</b>
+								</h3>
+							</div>
+							<div id="collapseNational" class="collapse" aria-expanded="true" style>
+								<div class="panel-body fundoCinza">
+									<div id="divNational">
+										<label class="control-label tituloDiv">National Leader Approval</label>
+										<div class="bordaDiv">
+											<div class="form-group row">
+												<div class="col-md-4">
+													<label class="control-label">Responsible:</label>
+													<input type="text" id="txt_gestor_national_leader" name="txt_gestor_national_leader" class="form-control" readonly>
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Date</label>
+													<input type="text" id="txt_dataAprovacao_nl" name="txt_dataAprovacao_nl" class="form-control" readonly>
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Hour:</label>
+													<input type="text" id="txt_horaAprov_national_leader" name="txt_horaAprov_national_leader" class="form-control" readonly>
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="col-md-12">
+													<label class="control-label">Approval</label><br>
+													<div class="radio">
+														<label>
+															<input type="radio" id="rd_aprovGestor_national_leader" name="rd_aprovGestor_national_leader" value="sim" >
+															Approved
+														</label>
+														<label>
+															<input type="radio" id="rd_aprovGestor_national_leader" name="rd_aprovGestor_national_leader" value="nao" >
+															Denied
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group row"> 
+												<div class="col-md-12">
+													<label class="control-label">Feedback</label>
+													<textarea class="form-control rounded-0" id="descricao_national_leader" name="descricao_national_leader" rows="3"></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						 -->
+						<!-- NATIONAL LEADER FIM -->
+						
+						<!-- DIVISION HEAD -->
+						<div class="panel panel-default" id="divDivision">
+							<div class="panel-heading fs-cursor-pointer">
+								<h3 class="panel-title">
+									<b class="tituloB" data-toggle="collapse" data-target="#collapseDivision" data-parent="divDivision" style="font-size: 13pt">Division Approval</b>
+								</h3>
+							</div>
+							<div id="collapseDivision" class="collapse" aria-expanded="true" style>
+								<div class="panel-body fundoCinza">
+									<div id="divDivis">
+										<label class="control-label tituloDiv">Division Approval</label>
+										<div class="bordaDiv">
+											<div class="form-group row">
+												<div class="col-md-4">
+													<label class="control-label">Responsible:</label>
+													<input type="text" id="txt_gestor_division" name="txt_gestor_division" class="form-control" readonly>
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Date</label>
+													<input type="text" id="txt_dtaprov_division" name="txt_dtaprov_division" class="form-control" readonly>
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Hour:</label>
+													<input type="text" id="txt_hrAprov_division" name="txt_hrAprov_division" class="form-control" readonly>
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="col-md-12">
+													<label class="control-label">Approval</label><br>
+													<div class="radio">
+														<label>
+															<input type="radio" id="rd_aprovGestor_division" name="rd_aprovGestor_division" value="sim" >
+															Approved
+														</label>
+														<label>
+															<input type="radio" id="rd_aprovGestor_division" name="rd_aprovGestor_division" value="nao" >
+															Denied
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group row"> 
+												<div class="col-md-12">
+													<label class="control-label">Feedback</label>
+													<textarea class="form-control rounded-0" id="descricao_division" name="descricao_division" rows="3"></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- DIVISION HEAD FIM -->
+						
+						<!-- VP -->
+						<div class="panel panel-default" id="divVP">
+							<div class="panel-heading fs-cursor-pointer">
+								<h3 class="panel-title">
+									<b class="tituloB" data-toggle="collapse" data-target="#collapseVP" data-parent="divVP" style="font-size: 13pt">VP Approval</b>
+								</h3>
+							</div>
+							<div id="collapseVP" class="collapse" aria-expanded="true" style>
+								<div class="panel-body fundoCinza">
+									<div id="divVPApproval">
+										<label class="control-label tituloDiv">VP Approval</label>
+										<div class="bordaDiv">
+											<div class="form-group row">
+												<div class="col-md-4">
+													<label class="control-label">Responsible:</label>
+													<input type="text" id="txt_gestor_vp" name="txt_gestor_vp" class="form-control" readonly>
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Date</label>
+													<input type="text" id="txt_dtaprov_vp" name="txt_dtaprov_vp" class="form-control" readonly>
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Hour:</label>
+													<input type="text" id="txt_hrAprov_vp" name="txt_hrAprov_vp" class="form-control" readonly>
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="col-md-12">
+													<label class="control-label">Approval</label><br>
+													<div class="radio">
+														<label>
+															<input type="radio" id="rd_aprovGestor_vp" name="rd_aprovGestor_vp" value="sim" >
+															Approved
+														</label>
+														<label>
+															<input type="radio" id="rd_aprovGestor_vp" name="rd_aprovGestor_vp" value="nao" >
+															Denied
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group row"> 
+												<div class="col-md-12">
+													<label class="control-label">Feedback</label>
+													<textarea class="form-control rounded-0" id="descricao_vp" name="descricao_vp" rows="3"></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- VP FIM -->
+						
+					</div>
+				</div>
+			</div>
+
+		</form>
+	</div>
+</body>
+</html>

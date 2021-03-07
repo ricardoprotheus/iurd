@@ -1,0 +1,959 @@
+<html>
+<head>
+	<script type="text/javascript" src="funcoes.js"></script>
+	<link type="text/css" rel="stylesheet" href="/style-guide/css/fluig-style-guide.min.css"/>
+	<link type="text/css" rel="stylesheet" href="style.css" />
+	<script type="text/javascript" src="/portal/resources/js/jquery/jquery.js"></script>
+	<script type="text/javascript" src="/portal/resources/js/jquery/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="/portal/resources/js/mustache/mustache-min.js"></script>
+	<script type="text/javascript" src="/style-guide/js/fluig-style-guide.min.js" charset="utf-8"></script>
+	<script type="text/javascript" src="freedom_lib.js" charset="utf-8"></script>
+	<script type="text/javascript" src="jquery.maskMoney.min.js" charset="utf-8"></script>
+	<script type="text/javascript" src="jquery.mask.min.js" charset="utf-8"></script>
+	<script src="/webdesk/vcXMLRPC.js"></script>
+	<script type="text/javascript" src="/TDIZOOM/resources/js/gd-lib.js"></script>
+	<script type="text/javascript" src="/TDIZOOM/resources/js/jMask.js"></script>
+	<link type="text/css" rel="stylesheet" href="/TDIZOOM/resources/css/TDIZOOM.css">
+</head>
+<body onload="loadform();">
+	<div class="fluig-style-guide">
+		<form name="form" role="form">
+			
+			<input type="hidden" id="name_report" name="name_report" value="IT"/>
+			<input type="hidden" id="hd_numProcesso" name="hd_numProcesso"/>
+			
+			<!-- CONSTANTES DO PROCESSO DE WF -->
+			<input type="hidden" id="ATIV_INICIAL" name="ATIV_INICIAL" value="4"/>
+			<input type="hidden" id="ATIV_STATE_LEADER" name="ATIV_STATE_LEADER" value="5"/>
+<!-- 		<input type="hidden" id="ATIV_NATIONAL_LEADER" name="ATIV_NATIONAL_LEADER" value="59"/>-->
+			<input type="hidden" id="ATIV_PCH_DPT_HEADER" name="ATIV_PCH_DPT_HEADER" value="14"/>
+			<input type="hidden" id="ATIV_DIVISION" name="ATIV_DIVISION" value="30"/>
+			<input type="hidden" id="ATIV_VP" name="ATIV_VP" value="35"/>
+			<input type="hidden" id="ATIV_PCH_DPT_HEADER_FIM" name="ATIV_PCH_DPT_HEADER_FIM" value="39"/>
+			
+			<input type="hidden" id="nextResponsible" name="nextResponsible" value=""/>
+			<input type="hidden" id="emailSecretary" name="emailSecretary" value=""/>
+			
+			
+			<!-- CONSTANTES DO PROCESSO DE WF - FIM -->
+			
+			<div class="tab-content">
+				<div id="home" class="tab-pane fade in active">
+					<div class="panel-group" id="accordion">
+						
+						<!-- SECRETARY INICIO -->
+						<div class="panel panel-default" id="divInfoGeral">
+							<div class="panel-heading fs-cursor-pointer">
+								<h3 class="panel-title">
+									<b class="tituloB up" data-toggle="collapse" data-target="#collapse11" data-parent="#divInfoGeral" style="font-size: 13pt">IT Request</b>
+								</h3>
+							</div>
+							<div id="collapse11" class="collapse" aria-expanded="true" style>
+								<div class="panel-body fundoCinza">
+									<div id="divInfomacaoGeral">
+										<label class="control-label tituloDiv">Request Data</label>
+										<div class="bordaDiv">
+											<div>
+												<input type="hidden" id="aux1" name="aux1" value="">
+												<input type="hidden" id="aux2" name="aux2" value="">
+												<input type="hidden" id="aux3" name="aux3" value="">
+												<input type="hidden" id="auxRadioChurch" name="auxRadioChurch" value="">
+												<input type="hidden" id="auxShipping" name="auxShipping" value="">
+												<input type="hidden" id="auxRdCheck" name="auxRdCheck" value="">
+											</div>
+											<div class="form-group row">
+												<div class="col-md-4">
+													<label class="control-label">Requester</label> 
+													<input type="text" readonly id="txt_solicitante" name="txt_solicitante" class="form-control">
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Date Requested</label> 
+													<input type="text" readonly id="txt_data_sol" name="txt_data_sol" class="form-control">
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Hour</label> 
+													<input type="text" readonly name="txt_hourFirst" id="txt_hourFirst" class="form-control">
+												</div>
+											</div>
+											<div class="form-group row" style="display: none;">
+												<input type="text" id="atividade" name="atividade">
+											</div>
+											
+											<div class="form-group row">
+												<div class="col-md-3">
+												<label>State</label>
+													<input type="hidden" name="code_state" id="code_state" class="form-control" readonly>
+													<input type="zoom" id='zoom_state' name='zoom_state' data-zoom="{
+														'displayKey':'code',
+														'datasetId':'states',
+														'maximumSelectionLength':'1',
+														'placeholder':'Choose the state',
+														'fields':[
+															{
+																'field':'code',
+																'label':'States'
+															},{
+																'field':'description',
+																'label':'Description'
+															}
+													]
+													}" 
+													/>
+												</div>
+												<div class="col-md-6">
+													<label>State Description</label>
+													<input type="text" name="name_state" id="name_state" class="form-control" readonly>
+												</div>
+											</div>
+											
+											
+											<div class="form-group row">
+												<div class="col-md-6">
+													<label class="control-label">The order is for</label>
+													<div class="radio">
+														<div class="col-md-2">
+															<label>
+																<input type="radio" name="orderFor" id="orderFor" value="pickup">
+																Pickup
+															</label>
+														</div>
+														<div class="col-md-2">	
+															<label>
+																<input type="radio" name="orderFor" id="orderFor" value="delivery">
+																Delivery
+															</label>
+														</div>	
+														<div class="col-md-2">
+															<label>
+																<input type="radio" name="orderFor" id="orderFor" value="none">
+																None
+															</label>
+														</div>
+													</div>
+												</div>
+											</div>
+											
+											<div class="form-group row">
+												<div class="col-md-12">
+													<label>Store</label>
+													<input type="text" name="txt_store" id="txt_store" class="form-control">
+												</div>
+											</div>
+											
+										</div>
+									</div>
+									
+									
+									<br>
+									<div id="divGeneral" >
+										<label class="control-label tituloDiv">General Information</label>
+										<div class="bordaDiv">
+											<div class="form-group row">
+												<div class="col-md-4">
+													<label>Contact Name</label>
+													<input type="text" name="txt_contactName" id="txt_contactName" class="form-control">
+												</div>
+												<div class="col-md-4">
+													<label>Phone Number</label>
+													<input type="text" name="txt_phoneNumber" id="txt_phoneNumber" class="form-control">
+												</div>
+												<div class="col-md-4">
+													<label>Email</label>
+													<input type="text" name="txt_email" id="txt_email" class="form-control">
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="col-md-4">
+													<label>Vendor</label> 
+													<input type="hidden" name="hd_supplierCode" id="hd_supplierCode" class="form-control">
+													<input type="zoom" id="supplierCode" name="supplierCode" data-zoom="{
+														'displayKey':'name',
+														'datasetId':'supplier',
+														'maximumSelectionLength':'1',
+														'placeholder':'Choose the supplier',
+														'fields':[
+															{
+																'field':'code',
+																'label':'Code'
+															},{
+																'field':'unit',
+																'label':'Unit'
+															},{
+																'field':'name',
+																'label':'Name'
+															}
+														]
+													}" 
+													/>
+													<input type="hidden" id="supplierUnit" name="supplierUnit" class="form-control" >
+													<input type="hidden" id="supplierDescription" name="supplierDescription" class="form-control" >	
+												</div>
+												<!-- 
+												<div class="col-md-1">
+													<label>Unit</label>
+													<input type="text" name="supplierUnit" id="supplierUnit" class="form-control" readonly>
+												</div>
+												<div class="col-md-4">
+													<label>Description</label>
+													<input type="text" name="supplierDescription" id="supplierDescription" class="form-control" readonly>
+												</div>
+												 -->
+											</div>
+											
+											<!-- 
+											<div class="form-group row">
+												<div class="col-md-4">
+													<label>Delivery City</label>
+													<input type="hidden" name="hd_deliveryCity" id="hd_deliveryCity" >
+													<input type="zoom" id='deliveryCity' name='deliveryCity' data-zoom="{
+														'displayKey':'city',
+														'datasetId':'cities',
+														'maximumSelectionLength':'1',
+														'placeholder':'Choose the city',
+														'fields':[
+															{
+																'field':'code',
+																'label':'Code'
+															},{
+																'field':'city',
+																'label':'City'
+															},{
+																'field':'States',
+																'label':'State'
+															}
+														]
+													}" 
+													/>
+												</div>
+												<div class="col-md-4">
+													<label>Issue City</label>
+													<input type="hidden" name="hd_issueCity" id="hd_issueCity" >
+													<input type="zoom" id='issueCity' name='issueCity' data-zoom="{
+														'displayKey':'city',
+														'datasetId':'cities',
+														'maximumSelectionLength':'1',
+														'placeholder':'Choose the city',
+														'fields':[
+															{
+																'field':'code',
+																'label':'Code'
+															},{
+																'field':'city',
+																'label':'City'
+															},{
+																'field':'States',
+																'label':'State'
+															}
+														]
+													}" 
+													/>
+												</div>
+											</div>
+											 -->
+											<div class="form-group row">	
+												<div class="col-md-4">
+													<label>Payment Term</label> 
+													<!--<input type="text" name="paymentTerm" id="paymentTerm" class="form-control"> -->
+													<input type="hidden" name="hd_paymentTerm" id="hd_paymentTerm" >
+													<input type="zoom" id="paymentTerm" name="paymentTerm" data-zoom="{
+														'displayKey':'descri',
+														'datasetId':'payments',
+														'maximumSelectionLength':'1',
+														'placeholder':'Choose the payment term',
+														'fields':[
+															{
+																'field':'code',
+																'label':'Code'
+															},{
+																'field':'descri',
+																'label':'Descri'
+															}
+														]
+													}" 
+													/>								
+												</div>
+												<div class="col-md-2" >
+														<label class="control-label" for="rd_status">Is there any charge for Shipping?</label><br>
+														<div class="col-md-12">
+															<div class="radio" >
+																<label>
+																	<input type="radio" id="rd_shipping" name="rd_shipping" value="sim" onclick="selectShipping();">Yes
+																</label>
+																<label>
+																	<input type="radio" id="rd_shipping" name="rd_shipping" value="nao" onclick="selectShipping();">No
+																</label>
+															</div>
+														</div>
+														
+													</div>
+												<div class="col-md-2">
+													<label>Shipping Cost</label>
+													<input type="text" id="txt_shippingCost" name="txt_shippingCost" placeholder="0.00" class="form-control maskmoney" onblur="somaFilhos('txt_total', 'txt_totalValue')" >
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="col-md-4">
+													<label class="control-label">Invoice Number</label>
+													<input type="text" name="invoiceNumber" id="invoiceNumber" class="form-control">
+												</div>
+												<div class="col-md-4">
+													<label>Department</label>
+													<input type="hidden" name="hd_department" id="hd_department" >
+													<input type="zoom" id="department" name="department" data-zoom="{
+														'displayKey':'descri',
+														'datasetId':'department',
+														'maximumSelectionLength':'1',
+														'placeholder':'Choose the Department',
+														'fields':[
+															{
+																'field':'code',
+																'label':'Code'
+															},{
+																'field':'descri',
+																'label':'Descri'
+															}
+														]
+													}" 
+													/>	
+												</div>
+											</div>	
+											<div class="form-group row">
+												<div class="col-md-12">
+													<label class="control-label">Payment Method</label>
+													<div class="radio">
+														<label>
+															<input type="radio" name="rd_check" id="rd_check" value="CHECK" onclick="blockBank();">
+															<strong>Check</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+														</label>
+														<label>
+															<input type="radio" name="rd_check" id="rd_check" value="CREDIT CARD (PHONE)" onclick="blockBank();">
+															<strong>Credit Card (Phone)</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;														
+														</label>
+														<label>
+															<input type="radio" name="rd_check" id="rd_check" value="CREDIT CARD (ONLINE)" onclick="blockBank();">
+															<strong>Credit Card (Online)</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;														
+														</label>
+														<label>
+															<input type="radio" name="rd_check" id="rd_check" value="ACH" onclick="blockBank();">
+															<strong>ACH</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;														
+														</label>
+														<label>
+															<input type="radio" name="rd_check" id="rd_check" value="WIRE" onclick="blockBank();">
+															<strong>Wire</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;														
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group row">	
+												<div class="col-md-4">
+													<label>Bank</label>
+													<input type="hidden" name="hd_bank" id="hd_bank" >
+													<div class="input-group">
+														<input class="form-control" type="text" name="bank" id="bank" onclick="javascript:zoomBank('bank')" readonly>
+														<div class="input-group-addon" style="cursor:pointer;" onclick="javascript:zoomBank('bank')"><span class="fluigicon fluigicon-zoom-in fluigicon-sm" ></span></div>
+													</div> 
+													<!--  
+													<input type="zoom" id="bank" name="bank" data-zoom="{
+														'displayKey':'descri',
+														'datasetId':'banks',
+														'maximumSelectionLength':'1',
+														'placeholder':'Choose the bank',
+														'fields':[
+															{
+																'field':'code',
+																'label':'Code'
+															},{
+																'field':'branch',
+																'label':'Branch'
+															},{
+																'field':'acc',
+																'label':'Account'
+															},{
+																'field':'descri',
+																'label':'Descri'
+															}
+														]
+													}" 
+													/>
+													-->
+													<input type="hidden" name="hd_branch" id="hd_branch">
+													<input type="hidden" name="hd_acc" id="hd_acc">
+												</div>
+											</div>	
+											<div class="form-group row">
+												<div class="col-md-12">
+													<label class="control-label">Notes</label>
+													<textarea class="form-control" id="txt_notes" name="txt_notes" rows="3"></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+									
+									<div id="divProjeto" >
+										<label class="control-label tituloDiv">Inclusion of Items</label>
+										<div class="bordaDiv">
+											<div class="form-group row">
+												<div class="col-md-1">
+													<input type="hidden" class="form-control" name="linha_produto" id="linha_produto"/>
+													<!--  <button style="width: 100%;" class="btn btn-primary" id="adicionaParcela" onClick="customWdkAddChild('table_product')">ADD</button> -->
+													<input class="btn btn-primary" type="button" value="ADD" onclick="customWdkAddChild('table_product');" id="add_produto">
+												</div>
+											</div>
+											<div class="form-group row">
+												<div style="overflow-x: scroll; width: 100%"  class="col-md-12">
+													<table class="table table-striped table-bordered" tablename="table_product" noaddbutton="true" nodeletebutton="true">
+														<thead>
+															<tr class="active">
+																<th style="width: 1%;"></th>
+																<th style="text-align: center; min-width: 350px; max-width: 350px">GL Code</th>															
+																<th style="text-align: center; min-width: 350px; max-width: 350px">Product</th>
+																<th style="text-align: center; min-width: 200px; max-width: 200px">Quantity</th>
+																<th style="text-align: center; min-width: 200px; max-width: 200px">Unit Value</th>
+																<th style="text-align: center; min-width: 300px; max-width: 300px">Inflow Type</th>
+																<th style="text-align: center; min-width: 200px; max-width: 200px">Taxes</th>
+																<!--<th style="text-align: center; min-width: 200px; max-width: 200px">Shipping Type</th>
+																<th style="text-align: center; min-width: 200px; max-width: 200px">Shipping Cost</th> -->
+																<th style="text-align: center; min-width: 200px; max-width: 200px">Discount</th>
+																<th style="text-align: center; min-width: 200px; max-width: 200px">Total</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr>
+																<td>
+																	<span class="fluigicon fluigicon-trash fluigicon-md" id="spnRemoveChild" name="spnRemoveChild" onClick="fnCustomDelete(this);" style="cursor: pointer;"></span>
+																</td>
+																<td style="text-align: center; min-width: 350px; max-width: 350px">
+																	<input type="zoom" id="classes" name="classes" data-zoom="{
+																		'displayKey':'descri',
+																		'datasetId':'classes',
+																		'maximumSelectionLength':'1',
+																		'placeholder':'Choose the class',
+																		'fields':[
+																			{
+																				'field':'code',
+																				'label':'Code'
+																			},{
+																				'field':'descri',
+																				'label':'Description'
+																			}
+																		]
+																	}" />	
+																	<input type="hidden" id="hd_classes" name="hd_classes" />
+																</td>
+																<td style="text-align: center; min-width: 350px; max-width: 350px">
+																	<input type="zoom" id="requesting_product" name="requesting_product" data-zoom="{
+																		'displayKey':'description',
+																		'datasetId':'products_get',
+																		'maximumSelectionLength':'1',
+																		'placeholder':'Choose the product',
+																		'fields':[
+																			{
+																				'field':'code',
+																				'label':'Code'
+																			},{
+																				'field':'description',
+																				'label':'Description'
+																			}
+																		]
+																	}" />	
+																	<input type="hidden" id="hd_requesting_product" name="hd_requesting_product" class="form-control">
+																</td>
+																<td>
+																	<input type="text" id="txt_quantity" name="txt_quantity" class="form-control" onblur="somar(this); somaFilhos('txt_total','txt_totalValue');" placeholder="0">
+																</td>
+																<td>
+																	<input type="text" id="txt_unitValue"	name="txt_unitValue" placeholder="0.00" class="form-control maskmoney" onblur="somar(this); somaFilhos('txt_total','txt_totalValue');">
+																	<input type="hidden" id="hd_simpleTotal" name="hd_simpleTotal" class="form-control">
+																</td>
+																<td style="text-align: center; min-width: 300px; max-width: 300px">
+																	<input type="zoom" id="txt_inflowType" name="txt_inflowType" data-zoom="{
+																		'displayKey':'text',
+																		'datasetId':'tes',
+																		'maximumSelectionLength':'1',
+																		'placeholder':'Choose the class',
+																		'fields':[
+																			{
+																				'field':'code',
+																				'label':'Code'
+																			},{
+																				'field':'text',
+																				'label':'Description'
+																			}
+																		]
+																	}" />	
+																	<input type="hidden" id="hd_inflowType" name="hd_inflowType" />
+																</td>
+																<td>
+																	<input type="text" id="txt_tax"	name="txt_tax" placeholder="0.00" class="form-control maskmoney"  onblur="somar(this); somaFilhos('txt_total','txt_totalValue')">
+																</td>
+																<!-- 
+																<td style="text-align: center; min-width: 200px; max-width: 200px">
+																	<input type="zoom" id="txt_shippingType" name="txt_shippingType" data-zoom="{
+																		'displayKey':'type',
+																		'datasetId':'shipment',
+																		'maximumSelectionLength':'1',
+																		'placeholder':'Choose the shipment',
+																		'fields':[
+																			{
+																				'field':'type',
+																				'label':'Type'
+																			}
+																		]
+																	}" />	
+																</td>
+																<td>
+																	<input type="text" id="txt_shippingCost"	name="txt_shippingCost" placeholder="0.00" class="form-control maskmoney"  onblur="somar(this); somaFilhos('txt_total','txt_totalValue');">
+																</td>
+																 -->
+																<td>
+																	<input type="text" id="txt_discount"	name="txt_discount" placeholder="0.00" class="form-control maskmoney"  onblur="somarDesconto('txt_discount','txt_totalDiscount'); somar(this); somaFilhos('txt_total','txt_totalValue');">
+																</td>
+																<td>
+																	<input type="text" id="txt_total"	name="txt_total" placeholder="0.00" class="form-control maskmoney" readonly>
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="col-md-offset-3  col-md-3">
+													<label>Shipping Cost:</label>
+													<input type="text" name="txt_totalShipment" id="txt_totalShipment" placeholder="0.00" class="form-control" readonly> 
+												</div>
+												<div class="col-md-3">
+													<label>Total Discount:</label>
+													<input type="text" name="txt_totalDiscount" id="txt_totalDiscount" placeholder="0.00" class="form-control" readonly> 
+												</div>
+												<div class="col-md-3">
+													<label>Total Value:</label>
+													<input type="text" name="txt_totalValue" id="txt_totalValue" placeholder="0.00" class="form-control" readonly> 
+												</div>
+											</div>
+											
+											<br>
+											
+											<div class="form-group row">
+												<div class="col-md-6">
+													<label class="control-label">Are there any documents that come attatched with this form?</label><br>
+													<div class="radio">
+														<label>
+															<input type="radio" id="rd_documentos" name="rd_documentos" value="sim">Yes
+														</label>
+														<label>
+															<input type="radio" id="rd_documentos" name="rd_documentos" value="nao">No
+														</label>
+													</div>
+												</div>
+											</div>
+										</div>
+																				<label class="control-label tituloDiv">Churchs Information</label>
+										<div class="bordaDiv">
+											
+											<!-- INICIO MOVIDO SERGIO - 20201103 -->		
+											<!-- ALTERADO BRUNO - 20200710 -->
+											<div class="form-group row">
+												<div class="col-md-12">
+													<label class="control-label">Does this expense apply to more than one church?</label>
+													<div class="radio">
+														<label> 
+															<input type="radio" name="rateioChurch" id="rateioChurch" onclick="selectChurch();" value="yes"> Yes 
+														</label> 
+														<label> 
+															<input type="radio" name="rateioChurch" id="rateioChurch" onclick="selectChurch();" value="no" checked="checked"> No 
+														</label>
+													</div>
+												</div>
+											</div>
+		
+											<!-- ALTERADO BRUNO - 20200710 - FIM -->
+		
+											<div class="form-group row" id="div_church">
+												<div id="registrado">
+													<div class="col-md-3">
+														<label class="control-label">Requesting church</label> 
+														<input type="hidden" id="hd_zoom_igreja" name="hd_zoom_igreja" class="form-control">
+														<input type="zoom" class="form-control" id="zoom_igreja" name="zoom_igreja"
+															data-zoom="{
+		                                                       'displayKey':'church',
+		                                                       'datasetId':'churches_get',
+		                                                       'maximumSelectionLength':'1',
+		                                                       'fields':[
+		                                                           {
+		                                                             'field':'church',
+		                                                             'label':'Church'
+		                                                           },{
+		                                                        	   'field':'States',
+		                                                        	   'label':'State'
+		                                                           },{
+		                                                        	   'field':'address',
+		                                                        	   'visible':'false'
+		                                                           }
+		                                                       ]
+		                                                    }" />
+													</div>
+													<div class="col-md-1">
+														<label class="control-label">State</label> 
+														<input type="text" id="txt_estado" name="txt_estado" class="form-control" readonly>
+													</div>
+													<div class="col-md-8">
+														<label class="control-label">Address</label> 
+														<input type="text" id="txt_endereco" name="txt_endereco" class="form-control" readonly>
+													</div>
+												</div>
+											</div>
+		
+											<!-- ALTERADO BRUNO - 20200710 -->
+											<div id="div_table_church">
+												<label class="control-label ">Churches</label>
+												<div class="bordaDiv">
+													<div class="form-group row">
+														<div class="col-md-1">
+															<input type="hidden" class="form-control" name="linha_church" id="linha_church" /> 
+															<input class="btn btn-primary" type="button" value="ADD" onclick="addChurch('table_church');" id="add_church">
+														</div>
+													</div>
+													<div class="form-group row">
+														<div style="overflow-x: scroll; width: 100%" class="col-md-12">
+															<table class="table table-striped table-bordered" tablename="table_church" noaddbutton="true" nodeletebutton="true">
+																<thead>
+																	<tr class="active">
+																		<th style="width: 1%;"></th>
+																		<th style="text-align: center; width: 20%">Requesting Church</th>
+																		<th style="text-align: center; width: 19%">State</th>
+																		<th style="text-align: center; width: 40%">Address</th>
+																		<th style="text-align: center; width: 20%">Percentage</th>
+																	</tr>
+																</thead>
+																<tbody>
+																	<tr>
+																		<td>
+																			<span class="fluigicon fluigicon-trash fluigicon-md" id="spnRemoveChildChurch" name="spnRemoveChildChurch" onClick="fnCustomDelete(this);" style="cursor: pointer;"> </span>
+																		</td>
+																		<input type="hidden" id="hd_requesting_church_grid" name="hd_requesting_church_grid" class="form-control">
+																		<td style="text-align: center; min-width: 350px; max-width: 350px">
+																			<input type="zoom" id="requesting_church_grid" name="requesting_church_grid" data-zoom="{
+																			'displayKey':'church',
+																			'datasetId':'churches_get',
+																			'maximumSelectionLength':'1',
+																			'placeholder':'Choose the church',
+																			'fields':[
+																				{
+																					'field':'church',
+																					'label':'Church'
+																				},{
+																					'field':'address',
+																					'label':'Address'
+																				},{
+																					'field':'States',
+																					'visible':'false'
+																				}
+																			] }" 
+																			/>
+																		</td>
+		
+																		<td>
+																			<input type="text" id="txt_state_grid"	name="txt_state_grid" class="form-control" readonly>
+																		</td>
+																		<td>
+																			<input type="text" id="txt_address_grid" name="txt_address_grid" class="form-control" readonly>
+																		</td>
+																		<td>
+																			<input type="text" id="txt_percent_grid" name="txt_percent_grid" class="form-control" placeholder="0.00" onblur="sumPercent(this)" maxlength="6">
+																		</td>
+																	</tr>
+																</tbody>
+															</table>
+														</div>
+													</div>
+												</div>
+												<br>
+											</div>
+		
+											<!-- ALTERADO BRUNO - 20200710 - FIM -->
+											<!-- FIM MOVIDO SERGIO - 20201103 - FIM -->										
+										</div>										
+										
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<!-- STATE LEADER -->
+						<div class="panel panel-default" id="divStateLeader">
+							<div class="panel-heading fs-cursor-pointer">
+								<h3 class="panel-title">
+									<b class="tituloB up" data-toggle="collapse" data-target="#collapseStateLeader" data-parent="#divStateLeader" style="font-size: 13pt">State Leader Approval</b>
+								</h3>
+							</div>
+							<div id="collapseStateLeader" class="collapse" style>
+								<div class="panel-body fundoCinza">
+									<div id="divAprova">
+										<label class="control-label tituloDiv">State Leader Approval</label>
+										<div class="bordaDiv">
+											<div class="form-group row">
+												<div class="col-md-4">
+													<label class="control-label">Responsible:</label> 
+													<input type="text" id="txt_gestor_state_leader" name="txt_gestor_state_leader" class="form-control" readonly>
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Date:</label> 
+													<input type="text" id="txt_data_aprov_state" name="txt_data_aprov_state" class="form-control" readonly>
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Hour:</label> 
+													<input type="text" id="txt_hora_aprov_state" name="txt_hora_aprov_state" class="form-control" readonly>
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="col-md-12">
+													<label class="control-label">Approval</label><br>
+													<div class="radio">
+														<label> 
+															<input type="radio" id="rd_aprovacaoGestor" name="rd_aprovacaoGestor" value="sim" > Approved
+														</label> 
+														<label> 
+															<input type="radio" id="rd_aprovacaoGestor" name="rd_aprovacaoGestor" value="nao" > Denied
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="col-md-12">
+													<label class="control-label">Feedback</label>
+													<textarea class="form-control" id="descricao" name="descricao" rows="3"></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- STATE LEADER FIM -->
+				
+						<!-- Retirado a pedido de Bruno 20201114-->		
+						<!-- NATIONAL LEADER LEADER 
+						<div class="panel panel-default" id="divNationalLeader">
+							<div class="panel-heading fs-cursor-pointer">
+								<h3 class="panel-title">
+									<b class="tituloB" data-toggle="collapse" data-target="#collapseNational" data-parent="divNationalLeader" style="font-size: 13pt">National Leader Approval</b>
+								</h3>
+							</div>
+							<div id="collapseNational" class="collapse" aria-expanded="true" style>
+								<div class="panel-body fundoCinza">
+									<div id="divNational">
+										<label class="control-label tituloDiv">National Leader Approval</label>
+										<div class="bordaDiv">
+											<div class="form-group row">
+												<div class="col-md-4">
+													<label class="control-label">Responsible:</label>
+													<input type="text" id="txt_gestor_national_leader" name="txt_gestor_national_leader" class="form-control" readonly>
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Date</label>
+													<input type="text" id="txt_dataAprovacao_nl" name="txt_dataAprovacao_nl" class="form-control" readonly>
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Hour:</label>
+													<input type="text" id="txt_horaAprov_national_leader" name="txt_horaAprov_national_leader" class="form-control" readonly>
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="col-md-12">
+													<label class="control-label">Approval</label><br>
+													<div class="radio">
+														<label>
+															<input type="radio" id="rd_aprovGestor_national_leader" name="rd_aprovGestor_national_leader" value="sim" >
+															Approved
+														</label>
+														<label>
+															<input type="radio" id="rd_aprovGestor_national_leader" name="rd_aprovGestor_national_leader" value="nao" >
+															Denied
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group row"> 
+												<div class="col-md-12">
+													<label class="control-label">Feedback</label>
+													<textarea class="form-control rounded-0" id="descricao_national_leader" name="descricao_national_leader" rows="3"></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						  NATIONAL LEADER FIM -->
+				<!-- Retirado a pedido de Bruno 20201114-->
+						
+						
+						<!-- DPT HEAD INICIO -->
+						
+						<div class="panel panel-default" id="divPchDptHead">
+							<div class="panel-heading fs-cursor-pointer">
+								<h3 class="panel-title">
+									<b class="tituloB" data-toggle="collapse" data-target="#collapsePchDptHead"	data-parent="#divPchDptHead" style="font-size: 13pt">Dpt Head Approval</b>
+								</h3>
+							</div>
+							<div id="collapsePchDptHead" class="collapse">
+								<div class="panel-body fundoCinza">
+									<div id="divPchDptHeadTotvs" >
+										<label class="control-label tituloDiv">Dpt Head Approval</label>
+										<div class="bordaDiv">
+											<div class="form-group row">
+												<div class="col-md-4">
+													<label class="control-label">Responsible:</label>
+													<input type="text" readonly name="txt_responsPchDptHead" id="txt_responsPchDptHead" class="form-control">
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Date:</label>
+													<input type="text" readonly name="txt_datePchDptHead" id="txt_datePchDptHead"	class="form-control">
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Hour:</label>
+													<input type="text" readonly name="txt_hourPchDtpHead" id="txt_hourPchDtpHead"	class="form-control">
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="col-md-12">
+													<label class="control-label">Approval</label>
+													<div class="radio">
+														<label>
+															<input type="radio" name="rd_pchDptHead" id="rd_pchDptHeadA" value="sim">
+															Approved
+														</label>
+														<label>
+															<input type="radio" name="rd_pchDptHead" id="rd_pchDptHeadD" value="nao">
+															Denied
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="col-md-12">
+													<label class="control-label">Feedback</label>
+													<textarea class="form-control" id="txt_feedbackPchDptHead" name="txt_feedbackPchDptHead" rows="3"></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<!-- PURCHASE DPT HEAD FIM -->
+						
+						<!-- DIVISION HEAD -->
+						<div class="panel panel-default" id="divDivision">
+							<div class="panel-heading fs-cursor-pointer">
+								<h3 class="panel-title">
+									<b class="tituloB" data-toggle="collapse" data-target="#collapseDivision" data-parent="divDivision" style="font-size: 13pt">Division Approval</b>
+								</h3>
+							</div> 
+							<div id="collapseDivision" class="collapse" aria-expanded="true" style>
+								<div class="panel-body fundoCinza">
+									<div id="divDivis">
+										<label class="control-label tituloDiv">Division Approval</label>
+										<div class="bordaDiv">
+											<div class="form-group row">
+												<div class="col-md-4">
+													<label class="control-label">Responsible:</label>
+													<input type="text" id="txt_gestor_division" name="txt_gestor_division" class="form-control" readonly>
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Date</label>
+													<input type="text" id="txt_dtaprov_division" name="txt_dtaprov_division" class="form-control" readonly>
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Hour:</label>
+													<input type="text" id="txt_hrAprov_division" name="txt_hrAprov_division" class="form-control" readonly>
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="col-md-12">
+													<label class="control-label">Approval</label><br>
+													<div class="radio">
+														<label>
+															<input type="radio" id="rd_aprovGestor_division" name="rd_aprovGestor_division" value="sim" >
+															Approved
+														</label>
+														<label>
+															<input type="radio" id="rd_aprovGestor_division" name="rd_aprovGestor_division" value="nao" >
+															Denied
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group row"> 
+												<div class="col-md-12">
+													<label class="control-label">Feedback</label>
+													<textarea class="form-control rounded-0" id="descricao_division" name="descricao_division" rows="3"></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- DIVISION HEAD FIM -->
+						
+						<!-- VP -->
+						<div class="panel panel-default" id="divVP">
+							<div class="panel-heading fs-cursor-pointer">
+								<h3 class="panel-title">
+									<b class="tituloB" data-toggle="collapse" data-target="#collapseVP" data-parent="divVP" style="font-size: 13pt">VP Approval</b>
+								</h3>
+							</div>
+							<div id="collapseVP" class="collapse" aria-expanded="true" style>
+								<div class="panel-body fundoCinza">
+									<div id="divVPApproval">
+										<label class="control-label tituloDiv">VP Approval</label>
+										<div class="bordaDiv">
+											<div class="form-group row">
+												<div class="col-md-4">
+													<label class="control-label">Responsible:</label>
+													<input type="text" id="txt_gestor_vp" name="txt_gestor_vp" class="form-control" readonly>
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Date</label>
+													<input type="text" id="txt_dtaprov_vp" name="txt_dtaprov_vp" class="form-control" readonly>
+												</div>
+												<div class="col-md-2">
+													<label class="control-label">Hour:</label>
+													<input type="text" id="txt_hrAprov_vp" name="txt_hrAprov_vp" class="form-control" readonly>
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="col-md-12">
+													<label class="control-label">Approval</label><br>
+													<div class="radio">
+														<label>
+															<input type="radio" id="rd_aprovGestor_vp" name="rd_aprovGestor_vp" value="sim" >
+															Approved
+														</label>
+														<label>
+															<input type="radio" id="rd_aprovGestor_vp" name="rd_aprovGestor_vp" value="nao" >
+															Denied
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group row"> 
+												<div class="col-md-12">
+													<label class="control-label">Feedback</label>
+													<textarea class="form-control rounded-0" id="descricao_vp" name="descricao_vp" rows="3"></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- VP FIM -->
+					</div>
+				</div>
+		</form>
+	</div>
+</body>
+</html>
